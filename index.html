@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Valo Trainer</title>
-<link rel="icon" href="favicon.ico" type="image/x-icon">
+<title>Foxy'Studio — Valo Trainer</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -350,6 +349,9 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
 .verified{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;background:var(--accent);border-radius:50%;font-size:9px;margin-left:3px;flex-shrink:0;}
 /* ADM PANEL */
 .adm-card{background:var(--dark2);border:1px solid rgba(255,70,85,0.2);padding:14px;margin-bottom:8px;}
+.adm-tab{flex:1;padding:10px;background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+.adm-tab.on{color:var(--red);border-bottom-color:var(--red);}
+.admq-opt-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
 .adm-card h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
 .adm-notif{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--dark);border:1px solid rgba(255,255,255,0.07);margin-bottom:6px;}
 .adm-notif-info{font-size:12px;}
@@ -365,6 +367,7 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
 
 <!-- SPLASH -->
 <div id="splash">
+  <img src="" id="sp-logo" style="width:80px;height:80px;object-fit:contain;opacity:0;animation:spIn .8s ease .1s forwards;margin-bottom:16px;">
   <div class="sp-studio">Foxy<span class="sp-dot">'</span>Studio</div>
   <div class="sp-sub">Presents</div>
   <div class="sp-line"></div>
@@ -459,12 +462,7 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
 <!-- HEADER -->
 <header>
   <div class="logo" onclick="showScreen('screen-home')">
-    <svg viewBox="0 0 38 38" fill="none">
-      <polygon points="19,2 36,10 36,28 19,36 2,28 2,10" stroke="#ff4655" stroke-width="1.5" fill="none"/>
-      <polygon points="19,9 29,15 29,23 19,29 9,23 9,15" fill="#ff4655" opacity="0.15"/>
-      <path d="M12 19 L19 12 L26 19" stroke="#ff4655" stroke-width="2" fill="none"/>
-      <circle cx="19" cy="21" r="2.5" fill="#ff4655"/>
-    </svg>
+    <img src="data:image/png;base64,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" style="width:34px;height:34px;object-fit:contain;">
     <div class="logo-text">
       <h1>Foxy<span>'</span>Studio</h1>
       <small>Valo Trainer</small>
@@ -776,7 +774,7 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
   <button onclick="signOut()" style="width:100%;padding:13px;background:transparent;border:1px solid rgba(255,70,85,0.3);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:8px;">⏏ Terminar Sessão</button>
 </div>
 
-<!-- ADM PANEL (only @teste) -->
+<!-- ADM PANEL — simplificado, manager é ficheiro separado -->
 <div class="screen" id="screen-adm">
   <button class="back-btn" onclick="showScreen('screen-profile');setBnav('bn-profile')">← Perfil</button>
   <div class="sec-hdr">
@@ -784,26 +782,16 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
     <h2>Painel ADM</h2>
   </div>
 
-  <div class="adm-card">
-    <h4>📋 Pedidos de Mudança de Username</h4>
-    <div id="adm-name-requests"><div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div></div>
+  <div class="adm-card" style="text-align:center;padding:28px 20px;">
+    <div style="font-size:40px;margin-bottom:12px;">🛡️</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;letter-spacing:2px;margin-bottom:6px;">ADM MANAGER</div>
+    <div style="font-size:12px;color:var(--gray);margin-bottom:20px;">Abre o painel completo de administração num separador dedicado.</div>
+    <a href="adm-manager.html" target="_blank" style="display:inline-block;padding:13px 28px;background:var(--red);color:white;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:13px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;">→ Abrir Manager</a>
   </div>
 
   <div class="adm-card">
-    <h4>🔨 Banir / Resetar Conta</h4>
-    <div class="adm-input-row">
-      <input class="adm-input" id="adm-user-input" placeholder="Username da conta..." type="text">
-    </div>
-    <div style="display:flex;gap:8px;">
-      <button class="adm-btn red" onclick="admBanUser()" style="flex:1;padding:10px;">🚫 Banir</button>
-      <button class="adm-btn green" onclick="admResetUser()" style="flex:1;padding:10px;">🔄 Resetar</button>
-    </div>
-    <div id="adm-action-result" style="font-size:11px;color:var(--green);margin-top:8px;"></div>
-  </div>
-
-  <div class="adm-card">
-    <h4>🧬 Forçar Agentes Diários</h4>
-    <div style="font-size:11px;color:var(--gray);margin-bottom:8px;">Escreve o nick do jogador e define os 3 agentes separados por vírgula.</div>
+    <h4>⚡ Ações Rápidas</h4>
+    <div style="font-size:11px;color:var(--gray);margin-bottom:10px;">Forçar agentes diários a um utilizador.</div>
     <div class="adm-input-row">
       <input class="adm-input" id="adm-agent-user" placeholder="Username..." type="text">
     </div>
@@ -812,6 +800,11 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
     </div>
     <button class="adm-btn green" onclick="admSetAgents()" style="width:100%;padding:10px;">✅ Definir Agentes</button>
     <div id="adm-agent-result" style="font-size:11px;color:var(--green);margin-top:8px;"></div>
+  </div>
+
+  <div class="adm-card">
+    <h4>📋 Pedidos de Username</h4>
+    <div id="adm-name-requests"><div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div></div>
   </div>
 </div>
 
@@ -1041,6 +1034,7 @@ function bootApp() {
   updateAvatars();
   renderStreakBanner();
   checkAdmUI();
+  loadCloudQuizzes();
 }
 
 // ── On page load — resume session ──
@@ -1394,7 +1388,9 @@ async function viewFriendProfile(uid) {}
 // ============================================================
 const ADM_USER = 'teste';
 
-function isAdm() { return _session?.username === ADM_USER; }
+function isAdm() {
+  return _session?.username === ADM_USER || userProfile?.isAdm === true;
+}
 
 function checkAdmUI() {
   const admBtn = document.getElementById('adm-btn');
@@ -1402,7 +1398,30 @@ function checkAdmUI() {
   if (isAdm()) {
     if (admBtn) admBtn.style.display = '';
     if (verified) verified.style.display = '';
+  } else {
+    if (admBtn) admBtn.style.display = 'none';
+    if (verified) verified.style.display = 'none';
   }
+}
+
+// ── Carrega perguntas cloud do JSONBin para o jogo ──
+async function loadCloudQuizzes() {
+  try {
+    const idxRec = await jbinRead(FIXED_INDEX_BIN_ID);
+    const quizBinId = idxRec?.quizBinId;
+    if (!quizBinId) return;
+    const rec = await jbinRead(quizBinId);
+    // Adiciona perguntas cloud a cada agente
+    const cloudAgentQs = rec?.agentQuestions || {};
+    for (const [agent, qs] of Object.entries(cloudAgentQs)) {
+      if (AGENTS[agent]) {
+        qs.forEach(q => { if (!AGENTS[agent].questions.some(eq=>eq.title===q.title)) AGENTS[agent].questions.push({...q,_cloud:true}); });
+      }
+    }
+    // Adiciona cenários cloud
+    const cloudScenarios = rec?.scenarioQuestions || [];
+    cloudScenarios.forEach(s => { if (!ALL_SCENARIOS.some(es=>es.title===s.title)) ALL_SCENARIOS.push({...s,_cloud:true}); });
+  } catch(e) {}
 }
 
 // ── Ban user ──
@@ -1418,6 +1437,23 @@ window.admBanUser = async () => {
     if (rec?.profile) {
       await jbinUpdate(entry.binId, { profile: { ...rec.profile, banned: true } });
       res.style.color = 'var(--green)'; res.textContent = `✅ @${user} banido.`;
+    }
+  } catch(e) { res.style.color='var(--red)'; res.textContent = 'Erro: ' + e.message; }
+};
+
+// ── Unban user ──
+window.admUnbanUser = async () => {
+  const user = document.getElementById('adm-user-input').value.trim().toLowerCase();
+  if (!user) return;
+  const res = document.getElementById('adm-action-result');
+  res.textContent = '⏳ A desbanir...';
+  try {
+    const entry = await indexLookup(user);
+    if (!entry) { res.textContent = '❌ Username não encontrado.'; return; }
+    const rec = await jbinRead(entry.binId);
+    if (rec?.profile) {
+      await jbinUpdate(entry.binId, { profile: { ...rec.profile, banned: false } });
+      res.style.color = 'var(--green)'; res.textContent = `✅ @${user} desbanido.`;
     }
   } catch(e) { res.style.color='var(--red)'; res.textContent = 'Erro: ' + e.message; }
 };
