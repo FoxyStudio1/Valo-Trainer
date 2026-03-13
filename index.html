@@ -754,6 +754,17 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
   </div>
 
   <div class="settings-section">
+    <h3>Quiz</h3>
+    <div class="setting-row" onclick="toggleAbilityNames()">
+      <div>
+        <span class="setting-label">Mostrar Nomes das Abilities</span>
+        <div style="font-size:10px;color:var(--gray);margin-top:2px;">Ex: "Paranoia" em vez de "flash de Omen"</div>
+      </div>
+      <div class="toggle-row"><div class="toggle on" id="toggle-ability-names"></div></div>
+    </div>
+  </div>
+
+  <div class="settings-section">
     <h3>Notificações</h3>
     <div class="setting-row" onclick="toggleNotif('chat')">
       <span class="setting-label">Mensagens nos Grupos</span>
@@ -848,16 +859,38 @@ async function jbinUpdate(binId, data) {
   });
 }
 
-// ── Username index bin (maps username → binId) ──
-// We store a small "index" bin with a fixed name tag so we can look up users
-const INDEX_BIN_LS = 'vt_index_binId';
+// ── Username index bin — ID fixo guardado num bin "root" ──
+// O bin root tem ID fixo hardcoded — partilhado por todos os utilizadores
+const ROOT_BIN_ID = ''; // preenchido no primeiro boot
+const ROOT_BIN_LS = 'vt_root_bin';
+
+async function getRootBin() {
+  // Tenta ler do localStorage primeiro (cache)
+  let rootId = localStorage.getItem(ROOT_BIN_LS);
+  if (!rootId) {
+    // Não existe ainda — cria o root bin
+    rootId = await jbinCreate({ __vt_root: true, indexBinId: null, groupsBinId: null });
+    if (rootId) localStorage.setItem(ROOT_BIN_LS, rootId);
+  }
+  return rootId;
+}
+
+// O problema do localStorage diferente por PC:
+// Solução: guardamos o indexBinId NO PRÓPRIO bin de cada utilizador (no profile).
+// O @teste lê o indexBinId do seu profile que foi criado com o indexBinId correto.
+// Para pedidos de nome: guardamos num bin de "sistema" cujo ID está no profile de cada user.
 
 async function getIndexBinId() {
-  // cached locally
+  // Tenta cache local primeiro
   let id = localStorage.getItem(INDEX_BIN_LS);
   if (id) return id;
-  // create one
-  id = await jbinCreate({ __vt_index: true, users: {} });
+  // Sem cache — usa o do profile se disponível
+  if (userProfile?.systemBinId) {
+    localStorage.setItem(INDEX_BIN_LS, userProfile.systemBinId);
+    return userProfile.systemBinId;
+  }
+  // Cria novo (primeiro utilizador a registar no dispositivo)
+  id = await jbinCreate({ __vt_index: true, users: {}, nameRequests: [] });
   if (id) localStorage.setItem(INDEX_BIN_LS, id);
   return id;
 }
@@ -918,8 +951,10 @@ window.doRegister = async () => {
       return;
     }
 
-    // Create profile bin
+    // Create profile bin — inclui systemBinId para partilha cross-device
+    const systemBinId = await getIndexBinId();
     const profile = newProfile(display, user);
+    profile.systemBinId = systemBinId; // guardado no profile para cross-device
     const binId = await jbinCreate({ profile });
     if (!binId) throw new Error('Falha ao criar bin.');
 
@@ -1447,53 +1482,63 @@ window.admSetAgents = async () => {
 async function loadAdmRequests() {
   const el = document.getElementById('adm-name-requests');
   if (!el) return;
+  el.innerHTML = '<div style="color:var(--gray);font-size:12px;">⏳ A carregar pedidos...</div>';
   try {
-    const indexId = localStorage.getItem(INDEX_BIN_LS);
-    if (!indexId) return;
+    const indexId = await getIndexBinId();
     const rec = await jbinRead(indexId);
-    const reqs = rec?.nameRequests || [];
-    if (!reqs.length) { el.innerHTML = '<div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div>'; return; }
-    el.innerHTML = reqs.map((r,i) => `
+    const users = rec?.users || {};
+    const allReqs = [];
+    // Varre todos os utilizadores à procura de pedidos pendentes
+    for (const [uname, entry] of Object.entries(users)) {
+      try {
+        const userRec = await jbinRead(entry.binId);
+        const req = userRec?.profile?.nameRequest;
+        if (req && req.status === 'pending') {
+          allReqs.push({ username: uname, binId: entry.binId, ...req });
+        }
+      } catch(e) {}
+    }
+    if (!allReqs.length) {
+      el.innerHTML = '<div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div>';
+      return;
+    }
+    el.innerHTML = allReqs.map((r, i) => `
       <div class="adm-notif">
         <div class="adm-notif-info">
           <strong>@${r.username}</strong> quer ser <strong>@${r.newUsername}</strong>
-          <div style="font-size:10px;color:var(--gray)">Permite mudar ${r.timesAllowed||1}x — pedido em ${new Date(r.ts).toLocaleDateString('pt-PT')}</div>
+          <div style="font-size:10px;color:var(--gray)">Pedido em ${new Date(r.ts).toLocaleDateString('pt-PT')}</div>
         </div>
         <div class="adm-notif-btns">
-          <button class="adm-btn green" onclick="admApproveNameReq(${i},1)">✓ 1x</button>
-          <button class="adm-btn green" onclick="admApproveNameReq(${i},2)">✓ 2x</button>
-          <button class="adm-btn red" onclick="admDenyNameReq(${i})">✗</button>
+          <button class="adm-btn green" onclick="admApproveNameReq('${r.username}','${r.binId}',1)">✓ 1x</button>
+          <button class="adm-btn green" onclick="admApproveNameReq('${r.username}','${r.binId}',2)">✓ 2x</button>
+          <button class="adm-btn red" onclick="admDenyNameReq('${r.username}','${r.binId}')">✗</button>
         </div>
       </div>`).join('');
-  } catch(e) { el.innerHTML = '<div style="color:var(--red);font-size:12px;">Erro ao carregar.</div>'; }
+  } catch(e) {
+    el.innerHTML = '<div style="color:var(--red);font-size:12px;">Erro ao carregar: ' + e.message + '</div>';
+  }
 }
 
-window.admApproveNameReq = async (idx, times) => {
-  const indexId = localStorage.getItem(INDEX_BIN_LS);
-  const rec = await jbinRead(indexId);
-  const reqs = rec?.nameRequests || [];
-  const req = reqs[idx];
-  if (!req) return;
-  // Allow user to change username N times
-  const userEntry = rec.users?.[req.username];
-  if (userEntry) {
-    const userRec = await jbinRead(userEntry.binId);
-    if (userRec?.profile) {
-      await jbinUpdate(userEntry.binId, { profile: { ...userRec.profile, canChangeUsername: times } });
-    }
+window.admApproveNameReq = async (username, binId, times) => {
+  const rec = await jbinRead(binId);
+  if (rec?.profile) {
+    await jbinUpdate(binId, {
+      profile: { ...rec.profile, canChangeUsername: times, nameRequest: { ...rec.profile.nameRequest, status: 'approved' } }
+    });
   }
-  reqs.splice(idx,1);
-  await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
   loadAdmRequests();
+  alert(`✅ @${username} pode mudar de username ${times}x`);
 };
 
-window.admDenyNameReq = async (idx) => {
-  const indexId = localStorage.getItem(INDEX_BIN_LS);
-  const rec = await jbinRead(indexId);
-  const reqs = rec?.nameRequests || [];
-  reqs.splice(idx,1);
-  await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
+window.admDenyNameReq = async (username, binId) => {
+  const rec = await jbinRead(binId);
+  if (rec?.profile) {
+    await jbinUpdate(binId, {
+      profile: { ...rec.profile, nameRequest: { ...rec.profile.nameRequest, status: 'denied' } }
+    });
+  }
   loadAdmRequests();
+  alert(`❌ Pedido de @${username} negado.`);
 };
 
 // ============================================================
@@ -1505,6 +1550,7 @@ let appSettings = {
   fontSize: 'medium',
   lang: 'pt',
   notifChat: true,
+  abilityNames: true,
 };
 
 function loadSettings() {
@@ -1529,6 +1575,8 @@ function applySettings() {
   // Update UI
   const td = document.getElementById('toggle-dark');
   if (td) { td.classList.toggle('on', appSettings.dark); }
+  const tan = document.getElementById('toggle-ability-names');
+  if (tan) tan.classList.toggle('on', appSettings.abilityNames);
   const fv = document.getElementById('font-size-val');
   const fvMap = {small:'Pequeno',medium:'Médio',large:'Grande'};
   if (fv) fv.textContent = fvMap[appSettings.fontSize]||'Médio';
@@ -1592,23 +1640,18 @@ window.openChangeUsername = async () => {
     const newU = prompt('Novo username pretendido (pedido enviado ao ADM):');
     if (!newU || newU.length < 3) return;
     if (!/^[a-z0-9_]+$/.test(newU.toLowerCase())) { alert('Username inválido.'); return; }
-    // Send request to index bin
-    const indexId = localStorage.getItem(INDEX_BIN_LS);
-    const rec = await jbinRead(indexId);
-    const reqs = rec?.nameRequests || [];
-    reqs.push({ username: _session.username, newUsername: newU.toLowerCase(), ts: Date.now() });
-    await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
+    // Guarda o pedido NO PROFILE DO UTILIZADOR — o ADM lê varrendo todos os users
+    saveProfile({ nameRequest: { newUsername: newU.toLowerCase(), ts: Date.now(), status: 'pending' } });
     document.getElementById('username-req-status').textContent = '⏳ Pendente';
     alert('✅ Pedido enviado ao ADM!');
   } else {
-    // Already approved — let them change directly
     const newU = prompt(`Podes mudar de username (${canChange}x disponível):`);
     if (!newU || newU.length < 3) return;
     const lower = newU.toLowerCase();
     const exists = await indexLookup(lower);
     if (exists) { alert('Username já existe.'); return; }
     // Move index entry
-    const indexId = localStorage.getItem(INDEX_BIN_LS);
+    const indexId = await getIndexBinId();
     const rec = await jbinRead(indexId);
     const users = rec?.users || {};
     const oldEntry = users[_session.username];
@@ -1617,7 +1660,7 @@ window.openChangeUsername = async () => {
       delete users[_session.username];
       await jbinUpdate(indexId, { ...rec, users });
     }
-    saveProfile({ username: lower, canChangeUsername: canChange - 1 });
+    saveProfile({ username: lower, canChangeUsername: canChange - 1, nameRequest: null });
     _session.username = lower;
     localStorage.setItem(LS_SESSION, JSON.stringify(_session));
     document.getElementById('prof-username-disp').textContent = '@' + lower;
@@ -1878,6 +1921,64 @@ window.openGroupSettings = async () => {
   }
   groups[currentGroupId] = g;
   await writeGroups(binId, groups);
+};
+
+// ============================================================
+// ABILITY NAMES — glossário completo
+// ============================================================
+const ABILITY_NAMES = {
+  // OMEN
+  "Shrouded Step":"Passo Encoberto","Dark Cover":"Fumo Escuro","Paranoia":"Paranoia","From the Shadows":"Das Sombras",
+  // JETT
+  "Updraft":"Corrente Ascendente","Tailwind":"Vento de Cauda","Cloudburst":"Rajada Nebulosa","Blade Storm":"Tempestade de Lâminas",
+  // SAGE
+  "Healing Orb":"Orbe de Cura","Slow Orb":"Orbe Lenta","Barrier Orb":"Orbe Barreira","Resurrection":"Ressurreição",
+  // SOVA
+  "Owl Drone":"Drone Coruja","Shock Bolt":"Flecha de Choque","Recon Bolt":"Flecha de Reconhecimento","Hunter's Fury":"Fúria do Caçador",
+  // KILLJOY
+  "Nanoswarm":"Nanoenxame","Alarmbot":"Bot Alarme","Turret":"Torrinha","Lockdown":"Bloqueio",
+  // RAZE
+  "Boom Bot":"Bot Explosivo","Blast Pack":"Pacote Explosivo","Paint Shells":"Granada de Fragmentação","Showstopper":"Arrasadora",
+  // CYPHER
+  "Trapwire":"Armadilha","Cyber Cage":"Gaiola Cibernética","Spycam":"Câmera Espiã","Neural Theft":"Roubo Neural",
+  // CLOVE
+  "Pick-Me-Up":"Anime-te","Meddle":"Interferência","Not Dead Yet":"Ainda Não Morri","Ruse":"Ardil",
+  // ASTRA
+  "Nova Pulse":"Pulso Nova","Nebula":"Nebulosa","Gravity Well":"Poço Gravitacional","Cosmic Divide":"Divisão Cósmica",
+  // BRIMSTONE
+  "Stim Beacon":"Farol de Estímulo","Incendiary":"Incendiária","Sky Smoke":"Fumo Aéreo","Orbital Strike":"Ataque Orbital",
+  // REYNA
+  "Leer":"Olhar Assustador","Devour":"Devorar","Dismiss":"Dispensar","Empress":"Imperatriz",
+  // ISO
+  "Undercut":"Corte Baixo","Double Tap":"Duplo Toque","Contingency":"Contingência","Kill Contract":"Contrato de Morte",
+  // YORU
+  "Fakeout":"Embuste","Blindside":"Ponto Cego","Gatecrash":"Irrupção","Dimensional Drift":"Deriva Dimensional",
+  // CHAMBER
+  "Trademark":"Marca Registada","Headhunter":"Caçador de Cabeças","Rendezvous":"Encontro","Tour de Force":"Tour de Force",
+  // FADE
+  "Seize":"Apresar","Prowler":"Perseguidor","Haunt":"Assombrar","Nightfall":"Queda da Noite",
+  // KAYO
+  "FLASH/drive":"FLASH/drive","ZERO/point":"ZERO/point","NULL/cmd":"NULL/cmd","NULL/cmd Blade":"Lâmina NULL/cmd",
+  // GEKKO
+  "Wingman":"Asa","Dizzy":"Tonto","Globbys":"Globbys","Thrash":"Thrash",
+};
+
+// Substitui nomes de abilities pelo nome PT ou EN conforme config
+function processAbilityText(text) {
+  if (!appSettings.abilityNames) return text; // OFF = deixa como está
+  // Substitui nomes EN pelo nome PT
+  let t = text;
+  for (const [en, pt] of Object.entries(ABILITY_NAMES)) {
+    t = t.replace(new RegExp(en.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'g'), pt);
+  }
+  return t;
+}
+
+window.toggleAbilityNames = () => {
+  appSettings.abilityNames = !appSettings.abilityNames;
+  saveSettings();
+  const tog = document.getElementById('toggle-ability-names');
+  if (tog) tog.classList.toggle('on', appSettings.abilityNames);
 };
 
 // ============================================================
@@ -2296,16 +2397,26 @@ window.nextScen = async () => {
 // AGENTS
 // ============================================================
 function initAgentsScreen() {
-  const seed = getUserSeed() + hashDate();
-  const rng = seededRng(seed);
-  const dailyAgents = [...AGENT_NAMES_ALL].sort(()=>rng()-.5).slice(0,3);
-  const done = userProfile?.agentsCompleted||[];
   const today = getTodayKey();
-  const todayDone = userProfile?.agentsDoneToday||{};
+  // Verifica se o ADM forçou agentes para hoje
+  let dailyAgents;
+  const forced = userProfile?.forcedAgents;
+  if (forced && forced.date === today && Array.isArray(forced.agents) && forced.agents.length === 3) {
+    // Valida que os agentes existem
+    dailyAgents = forced.agents.filter(a => AGENTS[a]);
+    if (dailyAgents.length !== 3) dailyAgents = null; // fallback se inválidos
+  }
+  if (!dailyAgents) {
+    const seed = getUserSeed() + hashDate();
+    const rng = seededRng(seed);
+    dailyAgents = [...AGENT_NAMES_ALL].sort(()=>rng()-.5).slice(0,3);
+  }
 
+  const todayDone = userProfile?.agentsDoneToday||{};
   let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">';
   dailyAgents.forEach(name=>{
     const ag=AGENTS[name];
+    if (!ag) return;
     const isDone = todayDone[today]?.includes(name)||false;
     html+=`<div class="ag-card ${isDone?'done':''}" onclick="startAgentQuiz('${name}')">
       ${isDone?'<div class="ag-done-stamp">✓</div>':''}
@@ -2331,7 +2442,8 @@ window.startAgentQuiz = (name) => {
 function renderAQ() {
   const ag=AGENTS[aqAgent], q=ag.questions[aqIdx], tot=ag.questions.length;
   const letters=['A','B','C','D'];
-  const optsH=q.options.map((o,i)=>`<button class="opt-btn" style="--ac:var(--purple)" onclick="answerAQ(${i})"><span class="opt-l" style="color:var(--purple)">${letters[i]}</span><span>${o.t}</span></button>`).join('');
+  const desc = processAbilityText(q.desc);
+  const optsH=q.options.map((o,i)=>`<button class="opt-btn" style="--ac:var(--purple)" onclick="answerAQ(${i})"><span class="opt-l" style="color:var(--purple)">${letters[i]}</span><span>${processAbilityText(o.t)}</span></button>`).join('');
   document.getElementById('agent-quiz-container').innerHTML=`
     <div class="aq-hdr"><div class="aq-emoji">${ag.emoji}</div>
       <div class="aq-info"><h3>${aqAgent}</h3><p>${ag.role} · ${aqIdx+1}/${tot}</p></div>
@@ -2341,7 +2453,7 @@ function renderAQ() {
       <div style="height:100%;width:${(aqIdx/tot)*100}%;background:var(--purple);transition:width .4s"></div></div>
     <div class="scen-box" style="border-left-color:var(--purple)">
       <div class="scen-tag" style="color:var(--purple)">${aqAgent} — Situação ${aqIdx+1}</div>
-      <h3>${q.title}</h3><p>${q.desc}</p></div>
+      <h3>${processAbilityText(q.title)}</h3><p>${desc}</p></div>
     <div class="opts-grid">${optsH}</div>
     <div class="fb-box" id="afb"></div>
     <button class="nxt-btn" id="anxt" style="background:var(--purple)" onclick="nextAQ()">${aqIdx<tot-1?'Próxima Simulação →':'Ver Resultados →'}</button>`;
@@ -2354,7 +2466,7 @@ window.answerAQ=(idx)=>{
   document.querySelectorAll('.opt-btn').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');if(i===idx&&!isOk)b.classList.add('wrong');});
   const fb=document.getElementById('afb');
   fb.classList.add('show',isOk?'cfb':'wfb');
-  fb.innerHTML=`<div class="fb-title">${isOk?'✓ CORRETO':'✗ NÃO ERA A MELHOR JOGADA'}</div><div class="fb-text">${q.feedback}</div><div class="tip-box"><strong>💡 Dica ${aqAgent}:</strong> ${q.tip}</div>`;
+  fb.innerHTML=`<div class="fb-title">${isOk?'✓ CORRETO':'✗ NÃO ERA A MELHOR JOGADA'}</div><div class="fb-text">${processAbilityText(q.feedback)}</div><div class="tip-box"><strong>💡 Dica ${aqAgent}:</strong> ${processAbilityText(q.tip)}</div>`;
   if(isOk){aqCorrect++;aqXP+=40;addXP(40);}
   document.getElementById('anxt').classList.add('show');
 };
