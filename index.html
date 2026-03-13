@@ -859,39 +859,32 @@ async function jbinUpdate(binId, data) {
   });
 }
 
-// ── Username index bin — ID fixo guardado num bin "root" ──
-// O bin root tem ID fixo hardcoded — partilhado por todos os utilizadores
-const ROOT_BIN_ID = ''; // preenchido no primeiro boot
-const ROOT_BIN_LS = 'vt_root_bin';
-
-async function getRootBin() {
-  // Tenta ler do localStorage primeiro (cache)
-  let rootId = localStorage.getItem(ROOT_BIN_LS);
-  if (!rootId) {
-    // Não existe ainda — cria o root bin
-    rootId = await jbinCreate({ __vt_root: true, indexBinId: null, groupsBinId: null });
-    if (rootId) localStorage.setItem(ROOT_BIN_LS, rootId);
-  }
-  return rootId;
-}
-
-// O problema do localStorage diferente por PC:
-// Solução: guardamos o indexBinId NO PRÓPRIO bin de cada utilizador (no profile).
-// O @teste lê o indexBinId do seu profile que foi criado com o indexBinId correto.
-// Para pedidos de nome: guardamos num bin de "sistema" cujo ID está no profile de cada user.
+// ── Index bin ID fixo — PARTILHADO por todos os dispositivos ──
+// Este ID é o bin central que mapeia username → binId do profile
+// É hardcoded para que todos os PCs usem sempre o mesmo bin
+const INDEX_BIN_LS = 'vt_index_binId';
+const HARDCODED_INDEX_BIN = 'auto'; // será preenchido no primeiro uso e guardado na conta
 
 async function getIndexBinId() {
-  // Tenta cache local primeiro
+  // 1. Cache local
   let id = localStorage.getItem(INDEX_BIN_LS);
-  if (id) return id;
-  // Sem cache — usa o do profile se disponível
-  if (userProfile?.systemBinId) {
-    localStorage.setItem(INDEX_BIN_LS, userProfile.systemBinId);
-    return userProfile.systemBinId;
+  if (id && id !== 'auto') return id;
+
+  // 2. Tenta obter da sessão/profile (cross-device)
+  if (_session?.indexBinId) {
+    localStorage.setItem(INDEX_BIN_LS, _session.indexBinId);
+    return _session.indexBinId;
   }
-  // Cria novo (primeiro utilizador a registar no dispositivo)
+
+  // 3. Primeiro arranque — cria o index bin e guarda o ID na sessão
   id = await jbinCreate({ __vt_index: true, users: {}, nameRequests: [] });
-  if (id) localStorage.setItem(INDEX_BIN_LS, id);
+  if (id) {
+    localStorage.setItem(INDEX_BIN_LS, id);
+    if (_session) {
+      _session.indexBinId = id;
+      localStorage.setItem(LS_SESSION, JSON.stringify(_session));
+    }
+  }
   return id;
 }
 
@@ -963,7 +956,8 @@ window.doRegister = async () => {
     if (!ok) { errEl.textContent = 'Username já existe. Tenta outro.'; btn.disabled=false; btn.textContent='→ Criar Conta'; return; }
 
     // Save session locally
-    _session = { username: user, binId, pwHash };
+    const indexBinId = await getIndexBinId();
+    _session = { username: user, binId, pwHash, indexBinId };
     localStorage.setItem(LS_SESSION, JSON.stringify(_session));
 
     userProfile = profile;
@@ -998,7 +992,7 @@ window.doLogin = async () => {
     const rec = await jbinRead(entry.binId);
     userProfile = rec?.profile || newProfile(user, user);
 
-    _session = { username: user, binId: entry.binId, pwHash };
+    _session = { username: user, binId: entry.binId, pwHash, indexBinId: await getIndexBinId() };
     localStorage.setItem(LS_SESSION, JSON.stringify(_session));
 
     document.getElementById('setup-screen').classList.remove('show');
@@ -1073,6 +1067,10 @@ window.addEventListener('DOMContentLoaded', () => {
   if (sess) {
     try {
       _session = JSON.parse(sess);
+      // Restaura o indexBinId no localStorage para getIndexBinId funcionar
+      if (_session.indexBinId) {
+        localStorage.setItem(INDEX_BIN_LS, _session.indexBinId);
+      }
       // Try cache first, then cloud
       const cached = localStorage.getItem('vt_profile_cache');
       if (cached) {
