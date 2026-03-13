@@ -860,32 +860,13 @@ async function jbinUpdate(binId, data) {
 }
 
 // ── Index bin ID fixo — PARTILHADO por todos os dispositivos ──
-// Este ID é o bin central que mapeia username → binId do profile
-// É hardcoded para que todos os PCs usem sempre o mesmo bin
 const INDEX_BIN_LS = 'vt_index_binId';
-const HARDCODED_INDEX_BIN = 'auto'; // será preenchido no primeiro uso e guardado na conta
+const FIXED_INDEX_BIN_ID = '69b400e4c3097a1dd520a506'; // bin central — nunca muda
 
 async function getIndexBinId() {
-  // 1. Cache local
-  let id = localStorage.getItem(INDEX_BIN_LS);
-  if (id && id !== 'auto') return id;
-
-  // 2. Tenta obter da sessão/profile (cross-device)
-  if (_session?.indexBinId) {
-    localStorage.setItem(INDEX_BIN_LS, _session.indexBinId);
-    return _session.indexBinId;
-  }
-
-  // 3. Primeiro arranque — cria o index bin e guarda o ID na sessão
-  id = await jbinCreate({ __vt_index: true, users: {}, nameRequests: [] });
-  if (id) {
-    localStorage.setItem(INDEX_BIN_LS, id);
-    if (_session) {
-      _session.indexBinId = id;
-      localStorage.setItem(LS_SESSION, JSON.stringify(_session));
-    }
-  }
-  return id;
+  // Sempre usa o ID fixo — garante que todos os PCs usam o mesmo bin
+  localStorage.setItem(INDEX_BIN_LS, FIXED_INDEX_BIN_ID);
+  return FIXED_INDEX_BIN_ID;
 }
 
 async function indexLookup(username) {
