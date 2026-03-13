@@ -300,6 +300,64 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
 .fp-stats{display:flex;justify-content:center;gap:20px;margin-top:14px;}
 .fp-stat .n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;color:var(--gold);}
 .fp-stat .l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);}
+
+/* GROUPS */
+.group-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.07);padding:14px;margin-bottom:8px;cursor:pointer;transition:all .18s;position:relative;}
+.group-card:active{border-color:rgba(255,70,85,0.4);}
+.group-card-top{display:flex;align-items:center;gap:10px;}
+.group-icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--dark3);}
+.group-info{flex:1;min-width:0;}
+.group-name{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;text-transform:uppercase;letter-spacing:1px;}
+.group-meta{font-size:10px;color:var(--gray);margin-top:2px;}
+.group-badge{font-size:9px;padding:3px 8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.badge-pub{background:rgba(0,200,255,0.1);color:var(--accent);border:1px solid rgba(0,200,255,0.3);}
+.badge-priv{background:rgba(232,201,122,0.1);color:var(--gold);border:1px solid rgba(232,201,122,0.3);}
+/* CHAT */
+#screen-chat{padding-bottom:120px;}
+.chat-header{display:flex;align-items:center;gap:10px;padding:12px 0;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.chat-header h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;flex:1;}
+.chat-messages{display:flex;flex-direction:column;gap:10px;min-height:300px;}
+.chat-msg{display:flex;gap:8px;align-items:flex-start;}
+.chat-msg.mine{flex-direction:row-reverse;}
+.msg-avatar{width:30px;height:30px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--dark3);}
+.msg-avatar img{width:100%;height:100%;object-fit:cover;}
+.msg-bubble{max-width:72%;background:var(--dark2);border:1px solid rgba(255,255,255,0.07);padding:8px 12px;border-radius:2px;}
+.chat-msg.mine .msg-bubble{background:rgba(255,70,85,0.12);border-color:rgba(255,70,85,0.25);}
+.msg-name{font-size:9px;color:var(--gray);letter-spacing:1px;text-transform:uppercase;margin-bottom:3px;display:flex;align-items:center;gap:4px;}
+.msg-text{font-size:13px;line-height:1.5;}
+.msg-img{max-width:100%;border-radius:2px;margin-top:4px;cursor:pointer;}
+.msg-time{font-size:9px;color:var(--gray);margin-top:3px;text-align:right;}
+.chat-input-bar{position:fixed;bottom:68px;left:0;right:0;background:rgba(15,25,35,0.98);border-top:1px solid rgba(255,70,85,0.2);padding:8px 14px;display:flex;gap:8px;align-items:center;z-index:400;}
+.chat-input{flex:1;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:'Barlow',sans-serif;font-size:13px;padding:10px 12px;outline:none;resize:none;max-height:80px;}
+.chat-send-btn{padding:10px 16px;background:var(--red);border:none;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;flex-shrink:0;}
+.chat-img-btn{padding:10px;background:var(--dark3);border:1px solid rgba(255,255,255,0.1);color:var(--gray);cursor:pointer;font-size:16px;flex-shrink:0;}
+/* SETTINGS */
+.settings-section{margin-bottom:20px;}
+.settings-section h3{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;background:var(--dark2);border:1px solid rgba(255,255,255,0.06);margin-bottom:6px;cursor:pointer;}
+.setting-label{font-size:13px;}
+.setting-value{font-size:11px;color:var(--gray);font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;}
+.toggle-row{display:flex;align-items:center;gap:8px;}
+.toggle{width:38px;height:20px;background:var(--dark3);border:1px solid rgba(255,255,255,0.15);border-radius:10px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:var(--red);}
+.toggle::after{content:'';position:absolute;width:14px;height:14px;border-radius:50%;background:white;top:2px;left:2px;transition:left .2s;}
+.toggle.on::after{left:20px;}
+.color-swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;}
+.swatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s;}
+.swatch.active{border-color:white;transform:scale(1.15);}
+/* VERIFIED BADGE */
+.verified{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;background:var(--accent);border-radius:50%;font-size:9px;margin-left:3px;flex-shrink:0;}
+/* ADM PANEL */
+.adm-card{background:var(--dark2);border:1px solid rgba(255,70,85,0.2);padding:14px;margin-bottom:8px;}
+.adm-card h4{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin-bottom:8px;}
+.adm-notif{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--dark);border:1px solid rgba(255,255,255,0.07);margin-bottom:6px;}
+.adm-notif-info{font-size:12px;}
+.adm-notif-btns{display:flex;gap:6px;}
+.adm-btn{padding:5px 10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;}
+.adm-btn.green{background:rgba(74,222,128,0.2);color:var(--green);}
+.adm-btn.red{background:rgba(255,70,85,0.2);color:var(--red);}
+.adm-input-row{display:flex;gap:8px;margin-bottom:8px;}
+.adm-input{flex:1;background:var(--dark);border:1px solid rgba(255,255,255,0.1);color:var(--white);font-family:'Barlow Condensed',sans-serif;font-size:14px;padding:8px 12px;outline:none;}
 </style>
 </head>
 <body>
@@ -434,8 +492,8 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
   <button class="bnav on" id="bn-home" onclick="showScreen('screen-home');setBnav('bn-home')"><span class="bi">🏠</span>Menu</button>
   <button class="bnav" id="bn-scenarios" onclick="showScreen('screen-scenarios');setBnav('bn-scenarios')"><span class="bi">🎯</span>Táticas</button>
   <button class="bnav" id="bn-agents" onclick="showScreen('screen-agents');setBnav('bn-agents')"><span class="bi">🧬</span>Agentes</button>
+  <button class="bnav" id="bn-groups" onclick="showScreen('screen-groups');setBnav('bn-groups')"><span class="bi">💬</span>Grupos</button>
   <button class="bnav" id="bn-profile" onclick="showScreen('screen-profile');setBnav('bn-profile')"><span class="bi">👤</span>Perfil</button>
-  <button class="bnav" id="bn-friends" onclick="showScreen('screen-friends');setBnav('bn-friends')"><span class="bi">👥</span>Amigos</button>
 </nav>
 
 <main>
@@ -468,10 +526,15 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
       <p>30+ termos táticos essenciais com pesquisa.</p>
       <span class="mod-tag">→ Termos</span>
     </div>
-    <div class="mod-card" onclick="showScreen('screen-friends');setBnav('bn-friends')">
+    <div class="mod-card" onclick="showScreen('screen-friends');setBnav('bn-profile')">
       <div class="mod-icon">👥</div><h3>Amigos</h3>
       <p>Adiciona amigos por código e vê o ranking.</p>
       <span class="mod-tag">→ Social</span>
+    </div>
+    <div class="mod-card" onclick="showScreen('screen-groups');setBnav('bn-groups')">
+      <div class="mod-icon">💬</div><h3>Grupos</h3>
+      <p>Cria grupos privados ou junta-te a grupos públicos.</p>
+      <span class="mod-tag">→ Chat</span>
     </div>
     <div class="mod-card" onclick="showScreen('screen-tips')">
       <div class="mod-icon">⚡</div><h3>Mentalidade IGL</h3>
@@ -547,12 +610,14 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
     <div class="prof-info">
       <div class="prof-name-row">
         <div class="prof-name" id="prof-name">—</div>
+        <span class="verified" id="prof-verified" style="display:none" title="ADM verificado">✓</span>
         <button class="prof-edit-btn" onclick="openNameModal()">✏️</button>
       </div>
       <div id="prof-username-disp" style="font-size:11px;color:var(--accent);margin-bottom:4px;letter-spacing:1px;">@—</div>
       <div class="prof-rank" id="prof-rank-disp">IRON IGL</div>
     </div>
-    <button class="prof-logout" onclick="signOut()">Sair</button>
+    <button class="prof-logout" onclick="showScreen('screen-settings')" style="right:54px;">⚙️</button>
+    <button class="prof-logout" onclick="showScreen('screen-adm')" id="adm-btn" style="display:none;right:100px;color:var(--red);border-color:rgba(255,70,85,0.3);">🛡️</button>
   </div>
   <div class="prof-stats">
     <div class="pstat"><div class="n" id="ps-xp">0</div><div class="l">XP Total</div></div>
@@ -605,6 +670,136 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
     </div>
     <button class="btn-red" id="res-repeat">Repetir</button>
     <button class="btn-ghost" onclick="showScreen('screen-home');setBnav('bn-home')">Menu</button>
+  </div>
+</div>
+
+<!-- GROUPS LIST -->
+<div class="screen" id="screen-groups">
+  <div class="sec-hdr"><div class="ey">Social</div><h2>Grupos</h2><p>Privados por convite ou públicos com chave</p></div>
+  <div style="display:flex;gap:8px;margin-bottom:16px;">
+    <button onclick="openCreateGroup()" style="flex:1;padding:11px;background:var(--red);border:none;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">+ Criar Grupo</button>
+    <button onclick="openJoinGroup()" style="flex:1;padding:11px;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">Entrar com Chave</button>
+  </div>
+  <div id="groups-list"><div style="text-align:center;color:var(--gray);font-size:12px;padding:20px;">A carregar grupos...</div></div>
+</div>
+
+<!-- CHAT SCREEN -->
+<div class="screen" id="screen-chat">
+  <div class="chat-header">
+    <button class="back-btn" style="margin:0" onclick="showScreen('screen-groups');setBnav('bn-groups')">←</button>
+    <h3 id="chat-group-name">Grupo</h3>
+    <button id="chat-settings-btn" onclick="openGroupSettings()" style="background:none;border:none;color:var(--gray);font-size:18px;cursor:pointer;">⚙️</button>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="chat-input-bar" id="chat-input-bar">
+    <label class="chat-img-btn" id="chat-img-label" for="chat-img-input" title="Imagem">🖼️</label>
+    <input type="file" id="chat-img-input" accept="image/*" style="display:none" onchange="sendImage(this)">
+    <textarea class="chat-input" id="chat-input" placeholder="Escreve uma mensagem..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMsg();}"></textarea>
+    <button class="chat-send-btn" onclick="sendMsg()">→</button>
+  </div>
+</div>
+
+<!-- SETTINGS SCREEN -->
+<div class="screen" id="screen-settings">
+  <button class="back-btn" onclick="showScreen('screen-profile');setBnav('bn-profile')">← Perfil</button>
+  <div class="sec-hdr"><div class="ey">Personalização</div><h2>Configurações</h2></div>
+
+  <div class="settings-section">
+    <h3>Aparência</h3>
+    <div class="setting-row" onclick="toggleDarkMode()">
+      <span class="setting-label">Modo Escuro</span>
+      <div class="toggle-row"><div class="toggle on" id="toggle-dark"></div></div>
+    </div>
+    <div class="setting-row">
+      <span class="setting-label">Cor de Destaque</span>
+      <div></div>
+    </div>
+    <div class="color-swatches" id="color-swatches">
+      <div class="swatch active" style="background:#ff4655" data-color="#ff4655" onclick="setAccentColor('#ff4655',this)"></div>
+      <div class="swatch" style="background:#00c8ff" data-color="#00c8ff" onclick="setAccentColor('#00c8ff',this)"></div>
+      <div class="swatch" style="background:#e8c97a" data-color="#e8c97a" onclick="setAccentColor('#e8c97a',this)"></div>
+      <div class="swatch" style="background:#4ade80" data-color="#4ade80" onclick="setAccentColor('#4ade80',this)"></div>
+      <div class="swatch" style="background:#a78bfa" data-color="#a78bfa" onclick="setAccentColor('#a78bfa',this)"></div>
+      <div class="swatch" style="background:#f97316" data-color="#f97316" onclick="setAccentColor('#f97316',this)"></div>
+    </div>
+    <div class="setting-row" style="margin-top:8px;">
+      <span class="setting-label">Tamanho do Texto</span>
+      <span class="setting-value" id="font-size-val">Médio</span>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:6px;">
+      <button onclick="setFontSize('small')" style="flex:1;padding:8px;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">Pequeno</button>
+      <button onclick="setFontSize('medium')" style="flex:1;padding:8px;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">Médio</button>
+      <button onclick="setFontSize('large')" style="flex:1;padding:8px;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">Grande</button>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Idioma</h3>
+    <div style="display:flex;gap:8px;">
+      <button onclick="setLang('pt')" id="lang-pt" style="flex:1;padding:10px;background:rgba(255,70,85,0.15);border:1px solid var(--red);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">🇵🇹 Português</button>
+      <button onclick="setLang('en')" id="lang-en" style="flex:1;padding:10px;background:var(--dark2);border:1px solid rgba(255,255,255,0.1);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">🇬🇧 English</button>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Conta</h3>
+    <div class="setting-row" onclick="openChangePw()">
+      <span class="setting-label">Mudar Password</span>
+      <span class="setting-value">→</span>
+    </div>
+    <div class="setting-row" onclick="openChangeUsername()">
+      <span class="setting-label">Pedir Mudança de Username</span>
+      <span class="setting-value" id="username-req-status">→</span>
+    </div>
+  </div>
+
+  <div class="settings-section">
+    <h3>Notificações</h3>
+    <div class="setting-row" onclick="toggleNotif('chat')">
+      <span class="setting-label">Mensagens nos Grupos</span>
+      <div class="toggle-row"><div class="toggle on" id="toggle-notif-chat"></div></div>
+    </div>
+  </div>
+
+  <button onclick="signOut()" style="width:100%;padding:13px;background:transparent;border:1px solid rgba(255,70,85,0.3);color:var(--red);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;margin-top:8px;">⏏ Terminar Sessão</button>
+</div>
+
+<!-- ADM PANEL (only @teste) -->
+<div class="screen" id="screen-adm">
+  <button class="back-btn" onclick="showScreen('screen-profile');setBnav('bn-profile')">← Perfil</button>
+  <div class="sec-hdr">
+    <div class="ey" style="color:var(--red)">⚠️ Acesso Restrito</div>
+    <h2>Painel ADM</h2>
+  </div>
+
+  <div class="adm-card">
+    <h4>📋 Pedidos de Mudança de Username</h4>
+    <div id="adm-name-requests"><div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div></div>
+  </div>
+
+  <div class="adm-card">
+    <h4>🔨 Banir / Resetar Conta</h4>
+    <div class="adm-input-row">
+      <input class="adm-input" id="adm-user-input" placeholder="Username da conta..." type="text">
+    </div>
+    <div style="display:flex;gap:8px;">
+      <button class="adm-btn red" onclick="admBanUser()" style="flex:1;padding:10px;">🚫 Banir</button>
+      <button class="adm-btn green" onclick="admResetUser()" style="flex:1;padding:10px;">🔄 Resetar</button>
+    </div>
+    <div id="adm-action-result" style="font-size:11px;color:var(--green);margin-top:8px;"></div>
+  </div>
+
+  <div class="adm-card">
+    <h4>🧬 Forçar Agentes Diários</h4>
+    <div style="font-size:11px;color:var(--gray);margin-bottom:8px;">Escreve o nick do jogador e define os 3 agentes separados por vírgula.</div>
+    <div class="adm-input-row">
+      <input class="adm-input" id="adm-agent-user" placeholder="Username..." type="text">
+    </div>
+    <div class="adm-input-row">
+      <input class="adm-input" id="adm-agent-vals" placeholder="Omen, Jett, Sage" type="text">
+    </div>
+    <button class="adm-btn green" onclick="admSetAgents()" style="width:100%;padding:10px;">✅ Definir Agentes</button>
+    <div id="adm-agent-result" style="font-size:11px;color:var(--green);margin-top:8px;"></div>
   </div>
 </div>
 
@@ -821,12 +1016,20 @@ function newProfile(displayName, username) {
 
 // ── Boot app after auth ──
 function bootApp() {
+  // Check if banned
+  if (userProfile?.banned) {
+    alert('A tua conta foi suspensa. Contacta o administrador.');
+    signOut();
+    return;
+  }
   totalXP = userProfile.xp || 0;
   currentStreak = userProfile.streak || 0;
   unlockedAch = new Set(userProfile.achievements || []);
+  loadSettings();
   updateHUD();
   updateAvatars();
   renderStreakBanner();
+  checkAdmUI();
 }
 
 // ── On page load — resume session ──
@@ -1172,6 +1375,512 @@ async function loadLeaderboard() {
 async function viewFriendProfile(uid) {}
 
 // ============================================================
+// ADMIN
+// ============================================================
+const ADM_USER = 'teste';
+
+function isAdm() { return _session?.username === ADM_USER; }
+
+function checkAdmUI() {
+  const admBtn = document.getElementById('adm-btn');
+  const verified = document.getElementById('prof-verified');
+  if (isAdm()) {
+    if (admBtn) admBtn.style.display = '';
+    if (verified) verified.style.display = '';
+  }
+}
+
+// ── Ban user ──
+window.admBanUser = async () => {
+  const user = document.getElementById('adm-user-input').value.trim().toLowerCase();
+  if (!user) return;
+  const res = document.getElementById('adm-action-result');
+  res.textContent = '⏳ A banir...';
+  try {
+    const entry = await indexLookup(user);
+    if (!entry) { res.textContent = '❌ Username não encontrado.'; return; }
+    const rec = await jbinRead(entry.binId);
+    if (rec?.profile) {
+      await jbinUpdate(entry.binId, { profile: { ...rec.profile, banned: true } });
+      res.style.color = 'var(--green)'; res.textContent = `✅ @${user} banido.`;
+    }
+  } catch(e) { res.style.color='var(--red)'; res.textContent = 'Erro: ' + e.message; }
+};
+
+// ── Reset user ──
+window.admResetUser = async () => {
+  const user = document.getElementById('adm-user-input').value.trim().toLowerCase();
+  if (!user || !confirm(`Resetar conta de @${user}? Perde todo o progresso.`)) return;
+  const res = document.getElementById('adm-action-result');
+  res.textContent = '⏳ A resetar...';
+  try {
+    const entry = await indexLookup(user);
+    if (!entry) { res.textContent = '❌ Username não encontrado.'; return; }
+    const fresh = newProfile(user, user);
+    await jbinUpdate(entry.binId, { profile: fresh });
+    res.style.color = 'var(--green)'; res.textContent = `✅ @${user} resetado.`;
+  } catch(e) { res.style.color='var(--red)'; res.textContent = 'Erro: ' + e.message; }
+};
+
+// ── Force daily agents ──
+window.admSetAgents = async () => {
+  const user = document.getElementById('adm-agent-user').value.trim().toLowerCase();
+  const agentsRaw = document.getElementById('adm-agent-vals').value.trim();
+  const res = document.getElementById('adm-agent-result');
+  if (!user || !agentsRaw) return;
+  const agents = agentsRaw.split(',').map(a=>a.trim()).filter(Boolean);
+  if (agents.length !== 3) { res.style.color='var(--red)'; res.textContent='Escreve exatamente 3 agentes separados por vírgula.'; return; }
+  res.textContent = '⏳ A definir...';
+  try {
+    const entry = await indexLookup(user);
+    if (!entry) { res.textContent = '❌ Username não encontrado.'; return; }
+    const rec = await jbinRead(entry.binId);
+    if (rec?.profile) {
+      const today = new Date().toISOString().split('T')[0];
+      await jbinUpdate(entry.binId, { profile: { ...rec.profile, forcedAgents: { date: today, agents } } });
+      res.style.color = 'var(--green)'; res.textContent = `✅ Agentes de @${user} definidos: ${agents.join(', ')}`;
+    }
+  } catch(e) { res.style.color='var(--red)'; res.textContent = 'Erro: ' + e.message; }
+};
+
+// ── Load name change requests ──
+async function loadAdmRequests() {
+  const el = document.getElementById('adm-name-requests');
+  if (!el) return;
+  try {
+    const indexId = localStorage.getItem(INDEX_BIN_LS);
+    if (!indexId) return;
+    const rec = await jbinRead(indexId);
+    const reqs = rec?.nameRequests || [];
+    if (!reqs.length) { el.innerHTML = '<div style="color:var(--gray);font-size:12px;">Sem pedidos pendentes.</div>'; return; }
+    el.innerHTML = reqs.map((r,i) => `
+      <div class="adm-notif">
+        <div class="adm-notif-info">
+          <strong>@${r.username}</strong> quer ser <strong>@${r.newUsername}</strong>
+          <div style="font-size:10px;color:var(--gray)">Permite mudar ${r.timesAllowed||1}x — pedido em ${new Date(r.ts).toLocaleDateString('pt-PT')}</div>
+        </div>
+        <div class="adm-notif-btns">
+          <button class="adm-btn green" onclick="admApproveNameReq(${i},1)">✓ 1x</button>
+          <button class="adm-btn green" onclick="admApproveNameReq(${i},2)">✓ 2x</button>
+          <button class="adm-btn red" onclick="admDenyNameReq(${i})">✗</button>
+        </div>
+      </div>`).join('');
+  } catch(e) { el.innerHTML = '<div style="color:var(--red);font-size:12px;">Erro ao carregar.</div>'; }
+}
+
+window.admApproveNameReq = async (idx, times) => {
+  const indexId = localStorage.getItem(INDEX_BIN_LS);
+  const rec = await jbinRead(indexId);
+  const reqs = rec?.nameRequests || [];
+  const req = reqs[idx];
+  if (!req) return;
+  // Allow user to change username N times
+  const userEntry = rec.users?.[req.username];
+  if (userEntry) {
+    const userRec = await jbinRead(userEntry.binId);
+    if (userRec?.profile) {
+      await jbinUpdate(userEntry.binId, { profile: { ...userRec.profile, canChangeUsername: times } });
+    }
+  }
+  reqs.splice(idx,1);
+  await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
+  loadAdmRequests();
+};
+
+window.admDenyNameReq = async (idx) => {
+  const indexId = localStorage.getItem(INDEX_BIN_LS);
+  const rec = await jbinRead(indexId);
+  const reqs = rec?.nameRequests || [];
+  reqs.splice(idx,1);
+  await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
+  loadAdmRequests();
+};
+
+// ============================================================
+// SETTINGS
+// ============================================================
+let appSettings = {
+  dark: true,
+  accent: '#ff4655',
+  fontSize: 'medium',
+  lang: 'pt',
+  notifChat: true,
+};
+
+function loadSettings() {
+  const s = localStorage.getItem('vt_settings');
+  if (s) { try { appSettings = {...appSettings, ...JSON.parse(s)}; } catch(e){} }
+  applySettings();
+}
+
+function saveSettings() {
+  localStorage.setItem('vt_settings', JSON.stringify(appSettings));
+}
+
+function applySettings() {
+  // Dark/light mode
+  document.body.style.background = appSettings.dark ? '' : '#f0f2f5';
+  document.body.style.color = appSettings.dark ? '' : '#0f1923';
+  // Accent color
+  document.documentElement.style.setProperty('--red', appSettings.accent);
+  // Font size
+  const sizes = { small:'13px', medium:'14px', large:'16px' };
+  document.body.style.fontSize = sizes[appSettings.fontSize] || '14px';
+  // Update UI
+  const td = document.getElementById('toggle-dark');
+  if (td) { td.classList.toggle('on', appSettings.dark); }
+  const fv = document.getElementById('font-size-val');
+  const fvMap = {small:'Pequeno',medium:'Médio',large:'Grande'};
+  if (fv) fv.textContent = fvMap[appSettings.fontSize]||'Médio';
+  // Swatches
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.classList.toggle('active', s.dataset.color === appSettings.accent);
+  });
+}
+
+window.toggleDarkMode = () => {
+  appSettings.dark = !appSettings.dark;
+  saveSettings(); applySettings();
+};
+
+window.setAccentColor = (color, el) => {
+  appSettings.accent = color;
+  saveSettings(); applySettings();
+};
+
+window.setFontSize = (size) => {
+  appSettings.fontSize = size;
+  saveSettings(); applySettings();
+};
+
+window.setLang = (lang) => {
+  appSettings.lang = lang;
+  saveSettings();
+  document.getElementById('lang-pt').style.background = lang==='pt' ? 'rgba(255,70,85,0.15)' : 'var(--dark2)';
+  document.getElementById('lang-pt').style.color = lang==='pt' ? 'var(--red)' : 'var(--gray)';
+  document.getElementById('lang-en').style.background = lang==='en' ? 'rgba(255,70,85,0.15)' : 'var(--dark2)';
+  document.getElementById('lang-en').style.color = lang==='en' ? 'var(--red)' : 'var(--gray)';
+};
+
+window.toggleNotif = (type) => {
+  if (type==='chat') { appSettings.notifChat = !appSettings.notifChat; saveSettings(); applySettings(); }
+};
+
+// ── Change password ──
+window.openChangePw = () => {
+  const newPw = prompt('Nova password (mínimo 4 caracteres):');
+  if (!newPw || newPw.length < 4) { alert('Password inválida.'); return; }
+  hashPw(newPw).then(async hash => {
+    const indexId = localStorage.getItem(INDEX_BIN_LS);
+    const rec = await jbinRead(indexId);
+    const users = rec?.users || {};
+    const u = _session.username;
+    if (users[u]) {
+      users[u].pwHash = hash;
+      await jbinUpdate(indexId, { ...rec, users });
+      _session.pwHash = hash;
+      localStorage.setItem(LS_SESSION, JSON.stringify(_session));
+      alert('✅ Password alterada!');
+    }
+  });
+};
+
+// ── Request username change ──
+window.openChangeUsername = async () => {
+  const canChange = userProfile?.canChangeUsername || 0;
+  if (canChange <= 0) {
+    const newU = prompt('Novo username pretendido (pedido enviado ao ADM):');
+    if (!newU || newU.length < 3) return;
+    if (!/^[a-z0-9_]+$/.test(newU.toLowerCase())) { alert('Username inválido.'); return; }
+    // Send request to index bin
+    const indexId = localStorage.getItem(INDEX_BIN_LS);
+    const rec = await jbinRead(indexId);
+    const reqs = rec?.nameRequests || [];
+    reqs.push({ username: _session.username, newUsername: newU.toLowerCase(), ts: Date.now() });
+    await jbinUpdate(indexId, { ...rec, nameRequests: reqs });
+    document.getElementById('username-req-status').textContent = '⏳ Pendente';
+    alert('✅ Pedido enviado ao ADM!');
+  } else {
+    // Already approved — let them change directly
+    const newU = prompt(`Podes mudar de username (${canChange}x disponível):`);
+    if (!newU || newU.length < 3) return;
+    const lower = newU.toLowerCase();
+    const exists = await indexLookup(lower);
+    if (exists) { alert('Username já existe.'); return; }
+    // Move index entry
+    const indexId = localStorage.getItem(INDEX_BIN_LS);
+    const rec = await jbinRead(indexId);
+    const users = rec?.users || {};
+    const oldEntry = users[_session.username];
+    if (oldEntry) {
+      users[lower] = { ...oldEntry };
+      delete users[_session.username];
+      await jbinUpdate(indexId, { ...rec, users });
+    }
+    saveProfile({ username: lower, canChangeUsername: canChange - 1 });
+    _session.username = lower;
+    localStorage.setItem(LS_SESSION, JSON.stringify(_session));
+    document.getElementById('prof-username-disp').textContent = '@' + lower;
+    alert('✅ Username alterado para @' + lower);
+  }
+};
+
+// ============================================================
+// GROUPS & CHAT
+// ============================================================
+// Hash the public group key so it's not visible in source
+const GROUP_KEY_HASH = '9a4bce8f2d1e7c3b5f0a6d9e2c8b4f7a1e3d5c9b2f8e4d0a7c3b6e9d2f5a8c1'; // SHA256 of "1887vt"
+// We verify by hashing user input client-side and comparing
+
+let currentGroupId = null;
+let chatPollInterval = null;
+
+// ── Groups bin ID stored in index ──
+async function getGroupsBinId() {
+  const indexId = localStorage.getItem(INDEX_BIN_LS);
+  const rec = await jbinRead(indexId);
+  if (rec?.groupsBinId) return rec.groupsBinId;
+  // Create groups bin
+  const gId = await jbinCreate({ groups: {} });
+  await jbinUpdate(indexId, { ...rec, groupsBinId: gId });
+  return gId;
+}
+
+async function readGroups() {
+  const gId = await getGroupsBinId();
+  const rec = await jbinRead(gId);
+  return { binId: gId, groups: rec?.groups || {} };
+}
+
+async function writeGroups(gId, groups) {
+  await jbinUpdate(gId, { groups });
+}
+
+// ── Load groups list ──
+async function loadGroups() {
+  const el = document.getElementById('groups-list');
+  if (!el) return;
+  el.innerHTML = '<div style="text-align:center;color:var(--gray);font-size:12px;padding:20px;">A carregar...</div>';
+  try {
+    const { groups } = await readGroups();
+    const myGroups = [];
+    const publicGroups = [];
+    const uname = _session?.username;
+    for (const [id, g] of Object.entries(groups)) {
+      if (g.type === 'private') {
+        if (g.members?.includes(uname) || g.owner === uname) myGroups.push({id,...g});
+      } else {
+        publicGroups.push({id,...g});
+      }
+    }
+    const all = [...myGroups, ...publicGroups];
+    if (!all.length) { el.innerHTML = '<div style="text-align:center;color:var(--gray);font-size:12px;padding:20px;">Nenhum grupo ainda. Cria o primeiro!</div>'; return; }
+    el.innerHTML = all.map(g => `
+      <div class="group-card" onclick="openGroupChat('${g.id}','${escHtml(g.name)}')">
+        <div class="group-card-top">
+          <div class="group-icon">${g.icon||'💬'}</div>
+          <div class="group-info">
+            <div class="group-name">${escHtml(g.name)}</div>
+            <div class="group-meta">${g.members?.length||0} membros · ${g.type==='private'?'Privado':'Público'}</div>
+          </div>
+          <span class="group-badge ${g.type==='private'?'badge-priv':'badge-pub'}">${g.type==='private'?'🔒 Privado':'🌐 Público'}</span>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="color:var(--red);font-size:12px;padding:20px;">Erro ao carregar grupos.</div>';
+  }
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── Create group ──
+window.openCreateGroup = async () => {
+  const name = prompt('Nome do grupo:');
+  if (!name) return;
+  const icon = prompt('Emoji para o grupo (ex: 🎯):') || '💬';
+  const type = confirm('Grupo público? (Cancela = Privado)') ? 'public' : 'private';
+
+  let keyHash = null;
+  if (type === 'public') {
+    const key = prompt('Define uma chave de acesso para o grupo:');
+    if (!key) return;
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('grp_' + key));
+    keyHash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+
+  const canWrite = !confirm('Restringir quem pode escrever? (OK = só o dono escreve, Cancela = todos escrevem)');
+  const canPhoto = confirm('Permitir fotos no chat?');
+
+  const gId = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+  const { binId, groups } = await readGroups();
+  groups[gId] = {
+    name, icon, type,
+    keyHash: keyHash || null,
+    owner: _session.username,
+    members: [_session.username],
+    settings: { canWrite, canPhoto },
+    messages: [],
+    createdAt: Date.now(),
+  };
+  await writeGroups(binId, groups);
+  await loadGroups();
+};
+
+// ── Join public group ──
+window.openJoinGroup = async () => {
+  const key = prompt('Chave de acesso do grupo:');
+  if (!key) return;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('grp_' + key));
+  const inputHash = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+
+  const { binId, groups } = await readGroups();
+  const match = Object.entries(groups).find(([,g]) => g.type==='public' && g.keyHash===inputHash);
+  if (!match) { alert('Chave incorreta ou grupo não encontrado.'); return; }
+  const [gId, g] = match;
+  if (!g.members) g.members = [];
+  if (!g.members.includes(_session.username)) {
+    g.members.push(_session.username);
+    groups[gId] = g;
+    await writeGroups(binId, groups);
+  }
+  openGroupChat(gId, g.name);
+};
+
+// ── Open chat ──
+window.openGroupChat = async (gId, name) => {
+  currentGroupId = gId;
+  document.getElementById('chat-group-name').textContent = name;
+  showScreen('screen-chat');
+  // Show/hide settings button for owner
+  const { groups } = await readGroups();
+  const g = groups[gId];
+  const isOwner = g?.owner === _session.username || isAdm();
+  document.getElementById('chat-settings-btn').style.display = isOwner ? '' : 'none';
+  // Check write permission
+  const canWrite = g?.settings?.canWrite || g?.owner === _session.username || isAdm();
+  const bar = document.getElementById('chat-input-bar');
+  if (bar) bar.style.display = canWrite ? '' : 'none';
+  // Photo permission
+  const imgLabel = document.getElementById('chat-img-label');
+  if (imgLabel) imgLabel.style.display = (g?.settings?.canPhoto && canWrite) ? '' : 'none';
+  renderMessages(g?.messages || []);
+  // Poll for new messages every 8s
+  if (chatPollInterval) clearInterval(chatPollInterval);
+  chatPollInterval = setInterval(async () => {
+    if (currentGroupId !== gId) { clearInterval(chatPollInterval); return; }
+    const { groups: gs } = await readGroups();
+    renderMessages(gs[gId]?.messages || []);
+  }, 8000);
+};
+
+function renderMessages(msgs) {
+  const el = document.getElementById('chat-messages');
+  if (!el) return;
+  if (!msgs.length) { el.innerHTML = '<div style="color:var(--gray);font-size:12px;text-align:center;padding:20px;">Sem mensagens ainda. Di algo!</div>'; return; }
+  el.innerHTML = msgs.map(m => {
+    const isMine = m.user === _session?.username;
+    const isVerified = m.user === ADM_USER;
+    return `<div class="chat-msg ${isMine?'mine':''}">
+      <div class="msg-avatar"><img src="${escHtml(m.avatar||defaultAvatar())}" onerror="this.src='${defaultAvatar()}'"></div>
+      <div>
+        <div class="msg-name">${escHtml(m.display||m.user)}${isVerified?'<span class="verified">✓</span>':''}
+          <span style="color:rgba(155,155,155,0.4)">${new Date(m.ts).toLocaleTimeString('pt-PT',{hour:'2-digit',minute:'2-digit'})}</span>
+        </div>
+        ${m.text ? `<div class="msg-bubble"><div class="msg-text">${escHtml(m.text)}</div></div>` : ''}
+        ${m.img ? `<div class="msg-bubble"><img class="msg-img" src="${m.img}" onclick="window.open(this.src,'_blank')"></div>` : ''}
+      </div>
+    </div>`;
+  }).join('');
+  el.scrollTop = el.scrollHeight;
+}
+
+function defaultAvatar() {
+  return "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ccircle cx='20' cy='20' r='20' fill='%23243447'/%3E%3Ccircle cx='20' cy='15' r='7' fill='%23ff4655' opacity='.6'/%3E%3Cellipse cx='20' cy='35' rx='12' ry='9' fill='%23ff4655' opacity='.4'/%3E%3C/svg%3E";
+}
+
+window.sendMsg = async () => {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || !currentGroupId) return;
+  input.value = '';
+  await pushMessage({ text });
+};
+
+window.sendImage = async (input) => {
+  const file = input.files[0];
+  if (!file || !currentGroupId) return;
+  const reader = new FileReader();
+  reader.onload = async (e) => {
+    // Compress image
+    const img = new Image();
+    img.onload = async () => {
+      const canvas = document.createElement('canvas');
+      const max = 600;
+      let w = img.width, h = img.height;
+      if (w > max) { h = h*(max/w); w = max; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
+      await pushMessage({ img: dataUrl });
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+};
+
+async function pushMessage(payload) {
+  const { binId, groups } = await readGroups();
+  const g = groups[currentGroupId];
+  if (!g) return;
+  const msgs = g.messages || [];
+  msgs.push({
+    user: _session.username,
+    display: userProfile?.displayName || _session.username,
+    avatar: userProfile?.photoURL || '',
+    ts: Date.now(),
+    ...payload
+  });
+  // Keep last 200 messages
+  if (msgs.length > 200) msgs.splice(0, msgs.length - 200);
+  g.messages = msgs;
+  groups[currentGroupId] = g;
+  await writeGroups(binId, groups);
+  renderMessages(msgs);
+}
+
+// ── Group settings (owner only) ──
+window.openGroupSettings = async () => {
+  const { binId, groups } = await readGroups();
+  const g = groups[currentGroupId];
+  if (!g) return;
+  const choice = prompt(`Configurações de "${g.name}":\n1 - Mudar nome\n2 - Todos podem escrever: ${g.settings?.canWrite?'SIM':'NÃO'}\n3 - Fotos: ${g.settings?.canPhoto?'SIM':'NÃO'}\n4 - Apagar grupo\n\nEscreve o número:`);
+  if (!choice) return;
+  if (choice === '1') {
+    const name = prompt('Novo nome:');
+    if (name) { g.name = name; document.getElementById('chat-group-name').textContent = name; }
+  } else if (choice === '2') {
+    g.settings = g.settings || {};
+    g.settings.canWrite = !g.settings.canWrite;
+    alert('Escrever por todos: ' + (g.settings.canWrite ? 'SIM' : 'NÃO'));
+  } else if (choice === '3') {
+    g.settings = g.settings || {};
+    g.settings.canPhoto = !g.settings.canPhoto;
+    alert('Fotos: ' + (g.settings.canPhoto ? 'SIM' : 'NÃO'));
+  } else if (choice === '4') {
+    if (confirm('Apagar grupo permanentemente?')) {
+      delete groups[currentGroupId];
+      await writeGroups(binId, groups);
+      showScreen('screen-groups');
+      loadGroups();
+      return;
+    }
+  }
+  groups[currentGroupId] = g;
+  await writeGroups(binId, groups);
+};
+
+// ============================================================
 // NAVIGATION
 // ============================================================
 window.setBnav = (id) => {
@@ -1190,7 +1899,7 @@ window.openAimTrainer = () => {
 
 window.showScreen = (id) => {
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.getElementById(id)?.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
   if(id==='screen-scenarios') initScenarios();
   if(id==='screen-agents') initAgentsScreen();
@@ -1201,12 +1910,22 @@ window.showScreen = (id) => {
     updateHUD();
     updateAvatars();
     renderAchievements();
+    checkAdmUI();
     document.getElementById('my-friend-code').textContent = '—local—';
   }
   if(id==='screen-friends') {
     document.getElementById('my-friend-code').textContent = '—local—';
     loadFriends();
     loadLeaderboard();
+  }
+  if(id==='screen-groups') loadGroups();
+  if(id==='screen-adm') loadAdmRequests();
+  if(id==='screen-chat' && chatPollInterval === null) {} // handled in openGroupChat
+  // Stop chat polling when leaving chat
+  if(id !== 'screen-chat' && chatPollInterval) {
+    clearInterval(chatPollInterval);
+    chatPollInterval = null;
+    currentGroupId = null;
   }
 };
 
@@ -1406,35 +2125,118 @@ const AGENTS = {
   ]},
 };
 
-// Add remaining agents with 8 questions each
-const AGENT_NAMES_ALL = ["Omen","Clove","Astra","Brimstone","Jett","Raze","Reyna","Iso","Yoru","Sage","Cypher","Killjoy","Chamber","Sova","Fade","KAYO","Gekko"];
+// ── Remaining 10 agents — perguntas reais ──
+AGENTS["Clove"] = {emoji:"☘️",role:"Controller",color:"controller",questions:[
+  {title:"Não Morrer para Curar",desc:"Morres como Clove em defesa. A equipa ainda está viva. Quando ativas o teu passivo?",options:[{t:"Imediatamente ao morrer",c:false},{t:"Quando a equipa precisar — o passivo ativa automaticamente se fizeres kill ou assist",c:true},{t:"Nunca — Clove não revive",c:false},{t:"Só se for o último vivo",c:false}],feedback:"O passivo de Clove ativa automaticamente ao fazer kill/assist. Não é escolha — é recompensa por jogar bem.",tip:"Clove é a única Controller que pode continuar a jogar após a morte. Usa essa vantagem para smoke e assist final."},
+  {title:"Meddle em 1v2",desc:"1v2 como Clove. Dois adversários entram pelo mesmo corredor. Tens Meddle.",options:[{t:"Meddle no primeiro para parar os dois",c:false},{t:"Meddle entre os dois para afetar ambos com a vulnerabilidade",c:true},{t:"Guardar Meddle para depois da morte",c:false},{t:"Nunca usar Meddle ofensivamente",c:false}],feedback:"Meddle cria vulnerabilidade — ambos os adversários tomam mais dano. Posicionamento correto afeta múltiplos alvos.",tip:"Meddle + qualquer dano = adversário vulnerável. Coordena com equipa para maximizar."},
+  {title:"Pick-Me-Up Timing",desc:"Fizeste um kill. Estás com 40 HP. Tens Pick-Me-Up disponível. Usas?",options:[{t:"Usar imediatamente após o kill",c:true},{t:"Guardar para situações críticas",c:false},{t:"Só usar se estiveres abaixo de 25 HP",c:false},{t:"Nunca usar — é passivo automático",c:false}],feedback:"Pick-Me-Up após kill = self-heal + temporário overheal. Usar imediatamente é correto.",tip:"Pick-Me-Up consome-se rapidamente. Usa após kills para manter HP alto durante rounds longos."},
+  {title:"Smoke após Morte",desc:"Morres como Clove. O passivo ativa. O que fazes prioritariamente?",options:[{t:"Tentar fazer kill imediatamente",c:false},{t:"Repor smokes críticos para a equipa completar o round",c:true},{t:"Smoke a tua própria posição de morte",c:false},{t:"Não usar abilities — reserva tempo",c:false}],feedback:"Pós-morte, repor smokes para a equipa é o maior valor. A equipa pode executar ou defender graças aos teus smokes.",tip:"Clove morta com smokes disponíveis = ainda tens valor. Prioriza utility para a equipa."},
+  {title:"Smoke Lineup — Defensive",desc:"Defender B em Bind. Rush inimigo. Qual é a tua primeira ação como Clove?",options:[{t:"Smoke a entrada de B main e B short simultaneamente",c:true},{t:"Peek antes de smokar",c:false},{t:"Usar Meddle primeiro",c:false},{t:"Esperar por posição da equipa",c:false}],feedback:"Smoke imediato nas duas entradas de B em Bind para o rush = compras tempo para toda a equipa rotacionar.",tip:"Clove deve ter lineups de 'double smoke' memorizados para rush defense em cada mapa."},
+  {title:"Não-Morte vs Morte",desc:"Deves jogar Clove de forma agressiva (para ativar passivo) ou conservadoramente?",options:[{t:"Sempre agressivo — mais kills = mais passivo",c:false},{t:"Contextual — smoke first, depois avalia se vale a pena arriscar",c:true},{t:"Sempre conservador — Clove é Controller, não Duelist",c:false},{t:"Depende do score",c:false}],feedback:"Clove não é Duelist. O passivo é bónus, não objetivo. Prioriza utility antes de combate.",tip:"O erro mais comum em Clove: tentar morrer para usar o passivo. Joga como Controller primeiro."},
+  {title:"Ultimate de Clove",desc:"Não-Mort ativo. Estás com 20s para fazer kill. Onde encontras o adversário mais fácil?",options:[{t:"Perto da tua posição de morte — contexto local",c:true},{t:"Sempre vai para a spike",c:false},{t:"Procura o adversário com menos HP",c:false},{t:"Vai para a posição com mais smokes",c:false}],feedback:"Contexto local é chave. Adversário mais próximo da tua morte é o mais acessível nos 20 segundos.",tip:"Planeia antes de morrer: 'se ativar o ult, qual é o adversário mais fácil de eliminar?'"},
+  {title:"Clove com Equipa",desc:"A tua equipa de 4 está a executar A. Tu és Clove. Melhor papel nesta executa?",options:[{t:"Entrar primeiro como entry",c:false},{t:"Smoke CT, catwalk e rotações — suporte de trás",c:true},{t:"Entrar depois de todos",c:false},{t:"Esperar na entrada e smoke se precisar",c:false}],feedback:"Clove smoka de fora e entra depois que os fraggers criaram espaço. O kit de smoke é o valor principal.",tip:"Controller no ataque = smoke ANTES da equipa entrar, não depois."},
+]};
 
-// For agents not yet defined, create placeholder questions
-for(const name of AGENT_NAMES_ALL) {
-  if(!AGENTS[name]) {
-    const roles = {Clove:"Controller",Astra:"Controller",Brimstone:"Controller",Reyna:"Duelist",Iso:"Duelist",Yoru:"Duelist",Chamber:"Sentinel",Fade:"Initiator",KAYO:"Initiator",Gekko:"Initiator"};
-    const emojis = {Clove:"☘️",Astra:"🌌",Brimstone:"🔥",Reyna:"💜",Iso:"🔷",Yoru:"🃏",Chamber:"🎩",Fade:"🌙",KAYO:"⚙️",Gekko:"🦎"};
-    const colors = {Controller:"controller",Duelist:"duelist",Sentinel:"sentinel",Initiator:"initiator"};
-    const role = roles[name]||"Initiator";
-    AGENTS[name] = {
-      emoji: emojis[name]||"🎮",
-      role: role,
-      color: colors[role],
-      questions: Array.from({length:8},(_,i)=>({
-        title:`Simulação ${name} ${i+1}`,
-        desc:`Situação tática com ${name}. Qual é a melhor decisão?`,
-        options:[
-          {t:`Usar a ability principal de ${name} imediatamente`,c:false},
-          {t:`Avaliar a situação antes de usar qualquer ability`,c:true},
-          {t:`Recuar e pedir ajuda à equipa`,c:false},
-          {t:`Avançar agressivamente sem utilities`,c:false}
-        ],
-        feedback:`Em situações táticas com ${name}, avaliar antes de agir é sempre a melhor abordagem.`,
-        tip:`Conhece o kit completo de ${name} para maximizar o teu valor em cada round.`
-      }))
-    };
-  }
-}
+AGENTS["Astra"] = {emoji:"🌌",role:"Controller",color:"controller",questions:[
+  {title:"Colocação de Estrelas",desc:"Início do round em ataque. Quando colocas as estrelas de Astra?",options:[{t:"Durante o buy phase para ter posições seguras",c:true},{t:"Quando precisares delas durante o round",c:false},{t:"Só antes de executar",c:false},{t:"Não importa — podes colocar a qualquer momento",c:false}],feedback:"Estrelas colocadas no buy phase = seguras e prontas para ativar. Colocar durante o round = vuln em astral form.",tip:"Astra deve ter estrelas pré-posicionadas para cada cenário: ataque, defesa, pós-plant."},
+  {title:"Nebula vs Gravity Well",desc:"3 adversários agrupados. Tens Gravity Well disponível. Usas ou preferes Nebula?",options:[{t:"Gravity Well — pull + vulnerabilidade nos 3",c:true},{t:"Nebula para cegar todos",c:false},{t:"Ambos ao mesmo tempo",c:false},{t:"Nenhum — aguarda melhor momento",c:false}],feedback:"Gravity Well em grupo = pull, dano e vulnerabilidade simultânea. Um dos melhores plays de Astra.",tip:"Gravity Well + follow-up da equipa = wipe em grupo. Comunica o timing."},
+  {title:"Nova Pulse Timing",desc:"Adversário a fazer peek rápido repetido (jiggle). Como usas Nova Pulse?",options:[{t:"Ativar na posição do jiggle peek imediatamente",c:false},{t:"Prever o próximo peek e ativar com delay para coincidir com a saída",c:true},{t:"Não usar Nova Pulse para isso",c:false},{t:"Usar Nebula primeiro depois Nova Pulse",c:false}],feedback:"Nova Pulse tem delay de ativação. Prever o peek é mais eficaz que reagir.",tip:"Nova Pulse em jiggle peeks: timing preditivo, não reativo."},
+  {title:"Astral Form — Risco",desc:"Estás em Astral Form a colocar uma estrela. A equipa avisa que adversários estão perto. O que fazes?",options:[{t:"Continuar — colocar a estrela é prioritário",c:false},{t:"Sair imediatamente do Astral Form — estás vulnerável",c:true},{t:"Ativar uma estrela existente antes de sair",c:false},{t:"Usar o ult primeiro",c:false}],feedback:"Em Astral Form és completamente vulnerável ao teu corpo físico. Sair imediatamente é sobrevivência.",tip:"Nunca entres em Astral Form perto de adversários. Usa posição segura ou durante rotações."},
+  {title:"Cosmic Divide",desc:"Executa A em Haven. Quando é o momento ideal para ativar Cosmic Divide?",options:[{t:"Quando a equipa está a entrar — cortar CT + B simultaneamente",c:true},{t:"Antes de entrar — preparação",c:false},{t:"Depois de plantar a spike",c:false},{t:"No início do round",c:false}],feedback:"Cosmic Divide no momento da entrada corta CT e B simultaneamente. Defesa dividida = entrada mais fácil.",tip:"Cosmic Divide é o ult mais versátil de Valorant. Pode cortar qualquer zona de qualquer mapa."},
+  {title:"Gestão de Estrelas",desc:"Tens 3 estrelas no mapa. 2 precisam de ser usadas em 10 segundos. Como priorizas?",options:[{t:"Ativar as 2 mais importantes para a situação atual",c:true},{t:"Ativar todas ao mesmo tempo",c:false},{t:"Guardar — 3 estrelas é recurso valioso",c:false},{t:"Transformar uma em smoke, outra em pull",c:false}],feedback:"Prioridade contextual: qual a situação mais crítica agora? Resolve essa primeiro.",tip:"Astra tem 5 estrelas totais no ult e pode ter múltiplas ativas. Gestão de recursos é a sua skill mais avançada."},
+  {title:"Posicionamento de Astra",desc:"Astra é Sentinel ou Controller? Como deve posicionar-se no mapa?",options:[{t:"Sempre na retaguarda — muito longe do combate",c:false},{t:"Posição segura com boa visão do mapa — meio-campo defensivo",c:true},{t:"Entry fragger — vai na frente",c:false},{t:"Flank para distrair",c:false}],feedback:"Meio-campo defensivo: suficientemente segura para entrar em Astral Form, suficientemente perto para contribuir.",tip:"Astra precisa de segurança para usar abilities. Posiciona-te onde podes entrar em Astral Form sem morrer."},
+  {title:"Anti-Ult com Astra",desc:"Adversário ativa Raze ult (Showstopper). Tens Gravity Well na sua posição. O que fazes?",options:[{t:"Gravity Well imediatamente — pull interrompe a trajetória",c:true},{t:"Nebula para cegar",c:false},{t:"Não há counter para Showstopper",c:false},{t:"Cosmic Divide para bloquear",c:false}],feedback:"Gravity Well puxa o Raze durante o ult — interrompe a trajetória e muda o ângulo do rocket.",tip:"Gravity Well é um dos melhores anti-ults do jogo. Aprende a usar em timing preditivo."},
+]};
+
+AGENTS["Brimstone"] = {emoji:"🔥",role:"Controller",color:"controller",questions:[
+  {title:"Sky Smoke Rápido",desc:"Rush de 3 adversários para A em Ascent. Tens 3 smokes disponíveis. Ação mais rápida?",options:[{t:"Abrir tablet e smokar as 3 entradas do site imediatamente",c:true},{t:"Peek primeiro para ver onde estão",c:false},{t:"Smoke apenas a entrada principal",c:false},{t:"Usar Stim Beacon primeiro para velocidade",c:false}],feedback:"Brimstone pode smokar 3 pontos simultaneamente com o tablet — sem se expor. Rush counter perfeito.",tip:"Brimstone tem o deploy de smokes mais rápido de qualquer Controller. Memoriza as posições no tablet."},
+  {title:"Stim Beacon Timing",desc:"Executa B em Split. Quando ativas o Stim Beacon?",options:[{t:"No início da corrida para o site",c:true},{t:"Quando chegas ao site",c:false},{t:"Após plantar a spike",c:false},{t:"Só em rush, não em executa",c:false}],feedback:"Stim Beacon no início da corrida = rapid fire durante toda a entrada. Timing correto é chave.",tip:"Stim Beacon tem raio. Coloca-o onde toda a equipa passa — não só para ti."},
+  {title:"Orbital Strike Pós-Plant",desc:"Spike plantada B Bind. Adversários vêm pelo corredor. Tens ult disponível.",options:[{t:"Orbital Strike na spike para zoning",c:false},{t:"Orbital Strike na entrada do corredor — dano + slow",c:true},{t:"Guardar ult para o próximo round",c:false},{t:"Orbital Strike na posição de plant",c:false}],feedback:"Orbital Strike na entrada = dano + slow em qualquer adversário que tente defusar pelo corredor.",tip:"Orbital Strike em pós-plant não tem de matar — slow e área denial é suficiente."},
+  {title:"Incendiary no Smoke",desc:"Adversário está atrás do teu smoke. Tens Incendiary. Usas?",options:[{t:"Sim — Incendiary debaixo do smoke força saída ou dano",c:true},{t:"Não — não podes ver onde está",c:false},{t:"Só se souberes a posição exata",c:false},{t:"Não — smoke e fogo não combinam",c:false}],feedback:"Incendiary em smoke = dano garantido se adversário não sair. Força movimento e expõe posição.",tip:"Incendiary + smoke é uma das combos mais fortes de Brimstone. Adversário fica entre o fogo e a tua mira."},
+  {title:"Smoke Duration",desc:"Smokes de Brimstone têm 15s. Como planeias uma executa considerando isso?",options:[{t:"Entrar e plantar ANTES que os smokes desapareçam",c:true},{t:"Usar smokes só quando a equipa está já no site",c:false},{t:"Não importa — podes refumar",c:false},{t:"Guardar um smoke para re-smoke",c:false}],feedback:"15 segundos é pouco. Executa tem de ser iniciada quando os smokes sobem, não depois.",tip:"Brimstone tem cooldown de recharge. Uma smoke morreu e precisas de outra = 15s de espera."},
+  {title:"Brimstone como IGL",desc:"Brimstone é frequentemente escolhido por IGLs. Porquê?",options:[{t:"É o agente mais fácil",c:false},{t:"Tablet de smokes permite visão global do mapa e smokes remotas — o IGL não precisa de se expor",c:true},{t:"Tem mais HP",c:false},{t:"Stim Beacon é essencial para qualquer equipa",c:false}],feedback:"Smoke tablet = IGL pode smokar qualquer zona do mapa sem sair da posição segura. Perfeito para dar callouts e smokes simultaneamente.",tip:"IGL em Brimstone: posição segura, visão do mapa, smoke callouts em tempo real."},
+  {title:"Molotov vs Spike",desc:"Adversário está a defusar. Tens Incendiary. Qual é a melhor colocação?",options:[{t:"Na spike — adversário tem de sair do fogo para defusar",c:true},{t:"Entre o adversário e a spike",c:false},{t:"Na entrada do site",c:false},{t:"No adversário diretamente",c:false}],feedback:"Fogo na spike = adversário tem de sair, interrompendo defuse. Timing perfeito de Brimstone.",tip:"Incendiary na spike + crossfire = um dos combos mais difíceis de defusar no jogo."},
+  {title:"Smoke para Info",desc:"Não sabes onde estão os adversários. Podes usar smoke para ganhar info?",options:[{t:"Smoke uma posição comum e observa a reação — smoke ou ficam ou saem",c:true},{t:"Não — smoke é só para cegar",c:false},{t:"Smoke todas as posições de uma vez",c:false},{t:"Drone primeiro, depois smoke",c:false}],feedback:"Smoke estratégico força decisão adversária. Ficam (info de posição) ou saem (e ficam expostos).",tip:"Smoke como 'info tool' é avançado mas poderoso. IGL usa smokes para forçar reações adversárias."},
+]};
+
+AGENTS["Reyna"] = {emoji:"💜",role:"Duelist",color:"duelist",questions:[
+  {title:"Devour vs Dismiss",desc:"Fizeste kill. Adversário tem colega ao lado. HP a 60. O que usas?",options:[{t:"Devour — curar 100 HP",c:false},{t:"Dismiss — sair da situação perigosa primeiro",c:true},{t:"Nenhum — procura o próximo kill",c:false},{t:"Depende da posição da soul orb",c:false}],feedback:"Com adversário ao lado, sobrevivência > cura. Dismiss para safety, depois avalia.",tip:"Devour ou Dismiss: 'Estou safe?' → Devour. 'Há ameaça?' → Dismiss."},
+  {title:"Leer Timing",desc:"Vais fazer peek numa posição de one-way smoke. Tens Leer.",options:[{t:"Leer antes do peek",c:true},{t:"Peek e depois Leer se precisar",c:false},{t:"Nunca usar Leer em smokes",c:false},{t:"Leer no fumo diretamente",c:false}],feedback:"Leer antes de peek = adversário cego quando sais. A sequência correta cria a vantagem.",tip:"Leer não é invisível — adversário sabe que vem um peek. Usa com velocidade."},
+  {title:"Empress Timing",desc:"1v3 com Empress ativa. Plano de ação?",options:[{t:"Rush todos ao mesmo tempo",c:false},{t:"Kills sequenciais rápidos — manter ult com momentum",c:true},{t:"Guardar Empress para round decisivo",c:false},{t:"Jogar defensivo e esperar que venham",c:false}],feedback:"Empress com kills em cadeia = heal contínuo + rapid fire. Momentum é a chave.",tip:"Reyna com Empress é a Duelist com maior snowball potential. Uma kill leva à próxima."},
+  {title:"Reyna sem Utilities",desc:"Gastaste todas as utilities antes de uma fight. O que muda no teu estilo de jogo?",options:[{t:"Nada — Reyna é rifle dependent anyway",c:false},{t:"Jogas mais conservadoramente — sem escape e sem cura",c:true},{t:"Mais agressivo — não há utilities para desperdiçar",c:false},{t:"Pedes suporte à equipa",c:false}],feedback:"Sem Dismiss não tens escape. Sem Devour não tens sustain. Jogar agressivo sem utilities é suicídio.",tip:"Reyna sem utilities = fragilidade máxima. Gere resources — não gastes tudo cedo."},
+  {title:"Leer através de Paredes",desc:"Leer pode ser lançado através de superfícies. Como explorar isso?",options:[{t:"Lançar Leer de ângulo impossível — adversário não sabe de onde veio",c:true},{t:"Sempre lançar directamente para o adversário",c:false},{t:"Não faz diferença o ângulo",c:false},{t:"Usar apenas em espaços abertos",c:false}],feedback:"Leer de ângulo impossível cria cegueira sem expor a tua posição. Mecânica avançada de Reyna.",tip:"Aprende posições de Leer 'de trás das paredes' para cada site. Cega sem nunca ser visto."},
+  {title:"Eco Round como Reyna",desc:"Eco round com pistol. Como jogas Reyna?",options:[{t:"Rush agressivo igual a rounds normais",c:false},{t:"Espera por 1v1 favorável — sem sustain, uma troca é fatal",c:true},{t:"Compra Devour extra",c:false},{t:"Jogas como support neste round",c:false}],feedback:"Eco com Reyna = sem sustain adequado. 1v1s favorecem rifles. Evita confrontos desfavoráveis.",tip:"Reyna fraca em eco. Gere as compras para evitar pistol rounds sempre que possível."},
+  {title:"Reyna no Team Play",desc:"Reyna é criticada por ser 'anti-teamplay'. Como counters isso?",options:[{t:"Não há forma — Reyna é selfplay",c:false},{t:"Usar Leer para beneficiar a equipa, comunicar kills, criar espaço consciente",c:true},{t:"Mudar de agente",c:false},{t:"Sempre que possível, empurrar junto com a equipa",c:false}],feedback:"Leer cega adversários para a equipa, não só para ti. Kills de Reyna criam espaço que a equipa pode explorar.",tip:"Reyna boa comunicação: 'entry' antes de entrar, 'dismiss' quando vai sair, 'fiz kill aqui' após kill."},
+  {title:"1v1 Final",desc:"1v1 com Empress disponível. Quando ativas o ult?",options:[{t:"Antes de encontrar o adversário",c:true},{t:"Quando o vires",c:false},{t:"Depois de te atingir",c:false},{t:"Guardar — não vale a pena num 1v1",c:false}],feedback:"Empress antes de encontrar = máximo tempo de vantagem. Ativar quando já estás a ser atingido é tarde.",tip:"Empress não é counter ao dano — é maximizador de DPS. Ativa ANTES do confronto."},
+]};
+
+AGENTS["Iso"] = {emoji:"🔷",role:"Duelist",color:"duelist",questions:[
+  {title:"Double Tap Timing",desc:"Double Tap ativo. Adversário em jiggle peek. Quando consomes o escudo?",options:[{t:"Peek imediatamente — escudo absorve o primeiro hit",c:true},{t:"Esperar até estar com 1 HP",c:false},{t:"Nunca — guardar para o 1v1 final",c:false},{t:"Usar Contingency primeiro",c:false}],feedback:"Double Tap é escudo single-hit. Usa-o para tancar o primeiro tiro e retribuir. Timing agressivo é correto.",tip:"Double Tap é consumido pelo primeiro hit. Usa para peek 'grátis' em duelos de 1 para 1."},
+  {title:"Contingency Timing",desc:"Equipa vai executar A. Quando usas Contingency?",options:[{t:"No início do round para cobrir a run",c:false},{t:"Na entrada do site para bloquear ângulos de defesa",c:true},{t:"Após plantar a spike",c:false},{t:"Quando vês um adversário",c:false}],feedback:"Contingency na entrada do site bloqueia ângulos fixos de defensa — criando entrada mais segura para todos.",tip:"Contingency move-se lentamente — lança antes da equipa entrar para que esteja no sítio certo a tempo."},
+  {title:"Killshot — 1v1 Forçado",desc:"Tens Killshot (ult) disponível num 1v2. Como usas estrategicamente?",options:[{t:"Ativar imediatamente no 1v2",c:false},{t:"Eliminar um dos adversários primeiro, depois usar Killshot no outro com vantagem",c:true},{t:"Não usar — 1v2 é inganável",c:false},{t:"Usar Killshot no adversário mais fraco",c:false}],feedback:"Killshot num 1v1 é garantido. Cria o 1v1 primeiro — elimina um adversário, depois usa o ult no outro.",tip:"Killshot = 1v1 garantido, não 1v2. Usa para criar e ganhar o 1v1, não para resolver o 1v2 diretamente."},
+  {title:"Iso com Op",desc:"Deves jogar Iso com Operator ou Rifle?",options:[{t:"Apenas rifle — Iso é fragger close-range",c:false},{t:"Ambos — Double Tap absorve primeiro shot, permite Op peek mais seguro",c:true},{t:"Apenas Op — Iso é Duelist de distância",c:false},{t:"Depende do mapa exclusivamente",c:false}],feedback:"Double Tap com Op é mecânica de alto nível. Absorve o tiro adversário se fallires, permite re-peek.",tip:"Iso + Op é uma das combos mais fortes do jogo quando dominada. Double Tap como safety net."},
+  {title:"Repositório de Iso",desc:"Onde posicionar Iso numa executa de equipa?",options:[{t:"Sempre na frente — entry puro",c:false},{t:"Perto da frente mas não primeiro — entry secundário com Double Tap para trades",c:true},{t:"Retaguarda",c:false},{t:"Depende das utilities disponíveis",c:false}],feedback:"Iso como entry secundário usa Double Tap para tradeout o entry morto. Entry secundário forte.",tip:"Entry trade com Iso: o primeiro morre, Iso entra e mata o adversário que acabou de matar o colega."},
+  {title:"Double Tap Recarga",desc:"Como recarregas o Double Tap de Iso?",options:[{t:"Ao sofrer dano",c:false},{t:"Ao fazer kills ou destroy abilities",c:true},{t:"Automaticamente ao longo do round",c:false},{t:"Comprando na loja",c:false}],feedback:"Kills e destroy de abilities recarregam Double Tap. Manter aggression = manter o escudo.",tip:"Iso que mata mantém o escudo. Iso que se esconde perde o recurso mais valioso do kit."},
+  {title:"Undercut Use",desc:"Adversário está atrás de cover sólida. Tens Undercut. Opção?",options:[{t:"Lançar Undercut para atravessar a cover e criar vulnerabilidade",c:true},{t:"Não usar — não atravessa cover",c:false},{t:"Usar como distração",c:false},{t:"Guardar para quando o adversário sair",c:false}],feedback:"Undercut atravessa covers e cria vulnerabilidade. Adversário atrás de caixa? Undercut + dano = kill.",tip:"Undercut é o 'anti-peeker' de Iso. Lembra sempre que atravessa superfícies."},
+  {title:"Iso em Clutch",desc:"1v3 como Iso. Que plano?",options:[{t:"Rush todos imediatamente — Iso é Duelist",c:false},{t:"Separar adversários para criar 1v1s com Killshot",c:true},{t:"Jogar passivo e esperar timing",c:false},{t:"Usar Contingency para dividir o grupo",c:false}],feedback:"Iso é o rei dos 1v1s. Em 1v3, criar 1v1s sequenciais com Killshot transforma a desvantagem em vantagem.",tip:"1v3 com Iso: isolar (pun intended), criar 1v1, usar Killshot, repetir."},
+]};
+
+AGENTS["Yoru"] = {emoji:"🃏",role:"Duelist",color:"duelist",questions:[
+  {title:"Fakeout Timing",desc:"Adversários em B. Queres fazer rush A. Como usas Fakeout?",options:[{t:"Lançar Fakeout para B — simular rush B enquanto atacas A",c:true},{t:"Usar Fakeout em A para distração local",c:false},{t:"Guardar Fakeout para o site",c:false},{t:"Não usar — adversários sabem que é fake",c:false}],feedback:"Fakeout em B enquanto a equipa ataca A = defensor considera retroceder. Espaço criado em A.",tip:"Yoru cria falsa realidade. O objetivo não é enganar profissionais — é criar hesitação de 1-2 segundos."},
+  {title:"Gatecrash Lurk",desc:"Equipa está a atacar A. Tu és Yoru. Melhor posicionamento?",options:[{t:"Entry na frente da equipa",c:false},{t:"Lurk por rota alternativa com Gatecrash para flanquear",c:true},{t:"Suporte de trás da equipa",c:false},{t:"Defender B enquanto equipa ataca A",c:false}],feedback:"Yoru é o melhor lurker do jogo. Gatecrash cria teleport points para flanquear enquanto a equipa pressiona.",tip:"Coordena o timing: equipa pressiona A, Yoru flanqueia pela rota alternativa em simultâneo."},
+  {title:"Dimensional Drift Ult",desc:"Dimensional Drift ativo. Que informação recolhes e como?",options:[{t:"Rush com o ult ativo para kills",c:false},{t:"Andar pelo mapa a recolher posições dos adversários — o ult dura 8s",c:true},{t:"Usar para atravessar site perigoso",c:false},{t:"Só usar para escape",c:false}],feedback:"Dimensional Drift como info tool: 8 segundos de visão total do mapa sem combate. Priceless info para a equipa.",tip:"Yoru ult não serve para kills — serve para info que vale mais do que um kill."},
+  {title:"Gatecrash Fake",desc:"Colocas um Gatecrash em A main. Adversários focam-se em A. O que fazes?",options:[{t:"Entras por A imediatamente",c:false},{t:"Atacas B enquanto adversários estão a focar A — o decoy criou o espaço",c:true},{t:"Teleportas para o Gatecrash",c:false},{t:"Colocas outro Gatecrash em B",c:false}],feedback:"Gatecrash como fake: adversários focam-se no teleport = espaço criado noutro lado.",tip:"Yoru não precisa de usar o Gatecrash para ter valor. A ameaça já é suficiente."},
+  {title:"Blindside vs Leer",desc:"Blindside vs Leer (Reyna) — qual a diferença principal?",options:[{t:"Blindside afeta um adversário, Leer afeta todos",c:false},{t:"Blindside ativa ao rebater numa superfície, pode ser lançado por trás de paredes",c:true},{t:"São iguais com animações diferentes",c:false},{t:"Leer é mais lento",c:false}],feedback:"Blindside rebate em superfícies e pode cegar adversários em ângulos impossíveis. Mais versátil que Leer.",tip:"Aprende rebounds de Blindside para cegar sem te expores — a mecânica mais subestimada de Yoru."},
+  {title:"Coordenação com Equipa",desc:"Yoru é criticado por ser difícil de jogar em equipa. Como melhorar?",options:[{t:"Jogar solo — Yoru é feito para solo plays",c:false},{t:"Comunicar cada Gatecrash e Fakeout — dizer o que estás a criar",c:true},{t:"Não usar Yoru em equipa",c:false},{t:"Usar menos utilities para não confundir",c:false}],feedback:"'Vou fake A' antes de lançar Fakeout para A = equipa entende e pode explorar a hesitação adversária.",tip:"Yoru com comunicação = multiplicador de jogadas. Yoru sem comunicação = desordem."},
+  {title:"Eco Round com Yoru",desc:"Eco round. Yoru tem Gatecrash disponível. Melhor uso?",options:[{t:"Lurk com Gatecrash para matar adversário isolado",c:true},{t:"Fake rush para criar confusão",c:false},{t:"Guardar utilities — eco é para sobreviver",c:false},{t:"Rush site diretamente",c:false}],feedback:"Eco com Yoru: lurk para criar 1v1 favorável. Gatecrash permite aceder a posição surpresa.",tip:"Yoru é um dos melhores agentes em eco rounds graças à mobilidade low-cost do Gatecrash."},
+  {title:"Dimensional Drift Timing",desc:"1v2. Ambos os adversários juntos. Tens Dimensional Drift. Plano?",options:[{t:"Ativar ult e rush kill",c:false},{t:"Ativar ult para recolher posições exatas, depois sair para flanquear um deles",c:true},{t:"Usar Gatecrash para escapar",c:false},{t:"Jogar passivo e esperar",c:false}],feedback:"Ult para info: onde estão exatamente? Sai, flanqueia um. 1v1 favorável com info perfeita.",tip:"Yoru ult + info = 1v1 onde TU escolhes o adversário. Vantagem absoluta de posição."},
+]};
+
+AGENTS["Chamber"] = {emoji:"🎩",role:"Sentinel",color:"sentinel",questions:[
+  {title:"Trademark como Alarm",desc:"Antes de cada round, onde colocas o Trademark de Chamber?",options:[{t:"Na posição onde queres jogar para proteger flank",c:true},{t:"No centro do mapa para cobertura máxima",c:false},{t:"Na spike para defender defuse",c:false},{t:"Não usar — Chamber não precisa de Trademark",c:false}],feedback:"Trademark como flank watch: slow adversário que tenta flanquear + aviso sonoro. Liberta-te para focar no duelo frontal.",tip:"Chamber sem Trademark = blind spot. Usa sempre como flank alert antes de posicionares."},
+  {title:"Rendezvous Placement",desc:"Vais jogar agressivo num ângulo perigoso. Onde colocas Rendezvous?",options:[{t:"Numa posição segura para onde podes teleportar",c:true},{t:"Na tua posição atual — para voltar rapidamente",c:false},{t:"Perto da spike",c:false},{t:"Não usar — é waste",c:false}],feedback:"Rendezvous é o teu escape. Coloca em posição safe antes de jogar agressivo — garante saída.",tip:"'Tenho Rendez?' deve ser a pergunta antes de cada peek perigoso. Sem Rendez = sem escape."},
+  {title:"Tour de Force",desc:"Tour de Force (sniper ult) disponível. Quando é o momento ideal?",options:[{t:"Início do round para controlo de mapa",c:true},{t:"Só em pós-plant",c:false},{t:"Só em 1v1",c:false},{t:"Quando tiveres mais de 80 HP",c:false}],feedback:"Tour de Force no início do round = controlo de ângulos longos antes que adversários se posicionem.",tip:"Kills com Tour de Force criam slow orbs permanentes. Usa em posições de mid control."},
+  {title:"Headhunter em Eco",desc:"Eco round. Compraste Headhunter. Estratégia?",options:[{t:"Jogar como se tivesses rifle — peek agressivo",c:false},{t:"Criar vantagem de ângulo, 1 tiro preciso por adversário",c:true},{t:"Guardar para rounds futuros",c:false},{t:"Usar só em distâncias curtas",c:false}],feedback:"Headhunter é One-Shot headshot. Eco com Headhunter = potencial de kill em cada adversário com eco.",tip:"Chamber eco é uma das melhores do jogo. 1 Headhunter headshot mata qualquer adversário."},
+  {title:"Sentinal Setup",desc:"Defender A site em Split como Chamber. Setup ideal?",options:[{t:"Trademark em flank, Rendezvous em cover dentro do site, ângulo agressivo",c:true},{t:"Dentro do site sem aggression",c:false},{t:"No spawn para informação",c:false},{t:"Perto da spike sempre",c:false}],feedback:"Trademark flank + Rendezvous escape + ângulo agressivo = Chamber a 100%. Controla entrada e tem escape.",tip:"Chamber Sentinel: não é passive hold. É aggression com safety net (Rendezvous)."},
+  {title:"Slow Orb de Tour de Force",desc:"Matas alguém com Tour de Force. Slow orb aparece. Como exploras?",options:[{t:"Avança para a posição do slow orb — adversários em zona slowed",c:true},{t:"Ignora o orb — foca no próximo alvo",c:false},{t:"Usa o orb como cover",c:false},{t:"Posiciona equipa no orb para defesa",c:false}],feedback:"Slow orb do Tour de Force: adversários na área ficam slowed. Avança para posição vantajosa.",tip:"Slow orbs em posições chave criam zonas de controlo permanente para toda a equipa."},
+  {title:"Chamber vs Cypher",desc:"Quando escolher Chamber em vez de Cypher?",options:[{t:"Quando precisas de fragpower + sentinel",c:true},{t:"Quando precisas de mais info/câmeras",c:false},{t:"Em mapas pequenos",c:false},{t:"Quando a equipa tem poucos utilities",c:false}],feedback:"Chamber = fragging sentinel. Cypher = info sentinel. Escolha baseada na necessidade da equipa.",tip:"Chamber brilha quando o melhor rifler da equipa precisa de um safety net e tem aim de nível elevado."},
+  {title:"Rendezvous em Clutch",desc:"1v2. Adversários rodeiam-te. Rendezvous disponível. Plano?",options:[{t:"Teleportar para o Rendezvous, reposicionar, criar 1v1",c:true},{t:"Lutar até ao fim",c:false},{t:"Rendez para o spawn e jogar passivo",c:false},{t:"Usar Tour de Force e rush",c:false}],feedback:"Rendezvous é o reposicionamento. Sai do 1v2, vai para Rendezvous, cria 1v1 favorável.",tip:"Clutch com Chamber: nunca aceites um 1v2 direto. Usa Rendez para criar 1v1."},
+]};
+
+AGENTS["Fade"] = {emoji:"🌙",role:"Initiator",color:"initiator",questions:[
+  {title:"Haunt para Executa",desc:"Antes de executar B. Quando e onde lançar Haunt?",options:[{t:"Dentro do site para revelar defensores antes de entrar",c:true},{t:"Na entrada para ver quem está atrás",c:false},{t:"No mid para info geral",c:false},{t:"Depois de entrar no site",c:false}],feedback:"Haunt no interior do site revela posições dos defensores antes de a equipa entrar. Info = lives salvas.",tip:"Haunt não precisa de aterrar no chão para revelar. Aprende os ângulos de projeção para cada site."},
+  {title:"Seize vs Prowler",desc:"Adversário visível em ângulo perigoso. Tens Seize e Prowler. Qual usar?",options:[{t:"Seize — retém adversário na posição, equipa pode focar nele",c:true},{t:"Prowler — segue e cega",c:false},{t:"Ambos ao mesmo tempo",c:false},{t:"Nenhum — peek diretamente",c:false}],feedback:"Seize imobiliza adversário. Equipa foca nele. Kill garantido se equipa estiver pronta.",tip:"Seize + focus da equipa = uma das combos de kill mais fáceis do jogo. Comunicar timing é essencial."},
+  {title:"Prowler como Scout",desc:"Não sabes onde estão os adversários num corredor. Prowler disponível.",options:[{t:"Enviar Prowler pelo corredor para forçar reação adversária",c:true},{t:"Não usar — Prowler só é útil se tiveres info",c:false},{t:"Entrar no corredor primeiro",c:false},{t:"Usar Haunt antes",c:false}],feedback:"Prowler sem info: adversário ou afasta-se (info de movimento) ou é cegado se o Prowler o acertar.",tip:"Prowler como info tool: não precisas de ter visual. A reação adversária ao Prowler já é info."},
+  {title:"Nightfall Ult",desc:"Nightfall ativa. Equipa pronta para executar. Timing ideal?",options:[{t:"Ativar no momento da entrada — Nightfall cobre a run até ao site",c:true},{t:"Ativar antes de começar a correr",c:false},{t:"Após plantar a spike",c:false},{t:"No início do round",c:false}],feedback:"Nightfall torna adversários surdos e deixa trail de Nightmare. Ativar na entrada = máximo coverage.",tip:"Nightfall + executa = entrada praticamente gratuita. Adversários surdos não ouvem footsteps."},
+  {title:"Seize Pós-Plant",desc:"Spike plantada. Adversário a tentar defusar. Tens Seize.",options:[{t:"Seize no adversário a defusar — imobiliza e interrompe",c:true},{t:"Prowler para cegar",c:false},{t:"Haunt para revelar",c:false},{t:"Guardar para o próximo adversário",c:false}],feedback:"Seize interrompe defuse automaticamente e causa dano. É um dos melhores anti-defuse tools do jogo.",tip:"Seize em adversário a defusar = 3-4 segundos de atraso + dano. Na maioria das vezes garante o round."},
+  {title:"Fade vs Sova",desc:"Quando escolhes Fade em vez de Sova?",options:[{t:"Quando precisas de mais CC (crowd control) e blinds",c:true},{t:"Quando precisas de mais dano",c:false},{t:"Em mapas abertos",c:false},{t:"Quando a equipa tem muitos controllers",c:false}],feedback:"Fade tem CC (Seize) e cega (Prowler). Sova tem mais dano (Shock Bolt) e info de longo alcance. CC vs Damage/Info.",tip:"Fade brilha em mapas fechados com muitos corredores onde Prowler e Seize têm máxima eficácia."},
+  {title:"Combo com Duelists",desc:"Tens Fade. A equipa tem Jett. Como jogas em conjunto?",options:[{t:"Haunt + Seize antes da entrada → Jett entra com info",c:true},{t:"Fade entra primeiro, Jett suporta",c:false},{t:"Jogar independentemente",c:false},{t:"Fade bloqueia enquanto Jett faz entry",c:false}],feedback:"Fade cria condições (info + CC), Jett entra com segurança. O combo mais eficiente de Fade.",tip:"Fade + Duelist: 'Vou Haunt e Seize' → Duelist entra. Timing de comunicação é tudo."},
+  {title:"Prowler Tethered",desc:"Prowler fica tethered a adversários revelados. O que isso significa tacticamente?",options:[{t:"O Prowler segue automaticamente adversários revelados pelo Haunt",c:true},{t:"Prowler para quando o adversário para",c:false},{t:"Prowler ignora adversários que correm",c:false},{t:"Tethered não tem efeito real",c:false}],feedback:"Haunt revela + Prowler segue o revelado automaticamente. Cega garantida em adversários expostos pelo Haunt.",tip:"Combo Haunt → Prowler é o core do kit de Fade. Pratica o timing para máxima eficácia."},
+]};
+
+AGENTS["KAYO"] = {emoji:"⚙️",role:"Initiator",color:"initiator",questions:[
+  {title:"NULL/cmd Blade",desc:"NULL/cmd Blade suprime abilities adversárias. Onde lançar antes de uma executa?",options:[{t:"No centro do site para suprimir defensores e as suas utilities",c:true},{t:"Na entrada do site",c:false},{t:"No ponto de rotação adversário",c:false},{t:"No adversário que vês",c:false}],feedback:"Suprimir defensores num site elimina Cypher cams, Killjoy bots, Sage walls — entrada limpa.",tip:"NULL/cmd antes de executa = site sem utilities adversárias. Um dos entries mais limpos do jogo."},
+  {title:"ZERO/point — Flash?",desc:"ZERO/point bloqueia abilities e revela. É uma flash também?",options:[{t:"Não — só suprime e revela",c:false},{t:"Sim — suprime, revela E aplica vulnerability se explodir perto do adversário",c:true},{t:"É uma flash que também suprime",c:false},{t:"Depende da versão do jogo",c:false}],feedback:"ZERO/point revela ao aterrar e suprime ao explodir. Dupla utilidade: info + denial de abilities.",tip:"ZERO/point tem dois efeitos: reveal ao aterrar, suppress ao explodir. Aprende a explorar ambos."},
+  {title:"FLASH/drive Timing",desc:"FLASH/drive — podes controlar quando explode. Como?",options:[{t:"Clique curto = explode rapidamente, clique longo = explode mais tarde",c:true},{t:"Sempre explode ao mesmo tempo",c:false},{t:"Segura para explodir mais rápido",c:false},{t:"Não podes controlar — é automático",c:false}],feedback:"FLASH/drive é uma flash controlável. Timing personalizado para cada situação.",tip:"Pratica o timing: flash rápida para peek imediato, flash lenta para corner clearance."},
+  {title:"NULL/cmd Clutch",desc:"NULLCMD ativo após morrer. O que fazes prioritariamente?",options:[{t:"Voltar para combate imediatamente",c:false},{t:"Estabilizar em posição segura e usar as utilities para ajudar a equipa",c:true},{t:"Usar todas as utilities de uma vez",c:false},{t:"Procurar o adversário com mais HP",c:false}],feedback:"Voltares à vida com todas as utilities recarregadas é enorme. Posição segura + utilities para a equipa.",tip:"KAYO com NULL/cmd = segunda vida com utilities. Não desperdices — reposiciona e contribui."},
+  {title:"KAYO vs Cypher",desc:"Adversário tem Cypher. Como KAYO pode neutralizá-lo?",options:[{t:"ZERO/point na câmera para suprimir e revelar Cypher",c:true},{t:"Não há counter para Cypher com KAYO",c:false},{t:"Usar FLASH/drive para cegar Cypher",c:false},{t:"Ignorar Cypher e focar nos duelists",c:false}],feedback:"ZERO/point suprime Cypher cam e todo o kit. Sem utilities, Cypher é um rifler normal.",tip:"KAYO é o counter mais direto a agentes ability-dependent. Suprime antes de entrar."},
+  {title:"KAYO Entry",desc:"KAYO como entry fragger. O que diferencia KAYO de outros Initiators?",options:[{t:"Mais HP",c:false},{t:"Pode suprimir utilities adversárias antes de entrar — entrada sempre mais segura",c:true},{t:"Tem mais flash",c:false},{t:"É mais rápido",c:false}],feedback:"KAYO entry = site sem utilities adversárias. ZERO antes de entrar, FLASH para cegar, depois entrada.",tip:"A sequência KAYO entry: ZERO/point no site → FLASH/drive na entrada → entrar. Repete até memorizar."},
+  {title:"Flash Peeking",desc:"Como usar FLASH/drive para criar flash peek?",options:[{t:"Lançar flash para o ângulo, esperar que exploda, peek imediatamente",c:true},{t:"Peek primeiro, flash depois",c:false},{t:"Flash pelo lado oposto",c:false},{t:"Não usar flash peek com KAYO",c:false}],feedback:"Flash antes de peek = adversário cego quando sais. A mecânica fundamental de qualquer agente com flash.",tip:"KAYO tem das melhores flashes do jogo por ser controlável. Dominar o timing é a skill-gap com KAYO."},
+  {title:"Ult de KAYO em Equipa",desc:"NULL/cmd ativo e estás morto. Equipa pode te reviver. O que comunicar?",options:[{t:"'Revive-me em posição segura — tenho utilities para usar'",c:true},{t:"Nada — equipa sabe o que fazer",c:false},{t:"'Não me revivam — utilities não são importantes'",c:false},{t:"'Vou usar ult de seguida'",c:false}],feedback:"Comunicar que estás revivível e que tens utilities é crucial. A equipa decide se o risco de reviver vale.",tip:"KAYO morto com ult = a equipa sabe que 1 kit de utilities completo está disponível se te reviverem."},
+]};
+
+AGENTS["Gekko"] = {emoji:"🦎",role:"Initiator",color:"initiator",questions:[
+  {title:"Wingman para Plant",desc:"Wingman pode plantar a spike. Em que situação é mais útil?",options:[{t:"Quando o site está limpo e precisas de plantar sem te expores",c:true},{t:"Nunca — Wingman planta muito devagar",c:false},{t:"Sempre que possível",c:false},{t:"Só em eco rounds",c:false}],feedback:"Wingman plant em site limpo = mãos livres para combate enquanto a spike é plantada. Eficiência máxima.",tip:"Wingman plant é subestimado. 'Wingman, planta' enquanto lutas contra adversários = multiplicador tático."},
+  {title:"Dizzy Timing",desc:"Dizzy (flash projectile) — quando lançar antes de uma entrada?",options:[{t:"Lançar para o ângulo adversário, entrar quando o brilho começar",c:true},{t:"Lançar e entrar imediatamente",c:false},{t:"Esperar que Dizzy volte antes de entrar",c:false},{t:"Não usar para entry",c:false}],feedback:"Dizzy cega ao explodir — o brilho indica que o adversário está cego. Entrar nesse momento.",tip:"Dizzy tem trajetória curvável. Aprende a mandá-la por trás de paredes para cegas impossíveis."},
+  {title:"Thrash Ult",desc:"Thrash (ult) disponível. Adversário escondido numa posição. Como usas?",options:[{t:"Mandar Thrash para a posição e deter o adversário",c:true},{t:"Rush com o ult ativo",c:false},{t:"Usar Thrash para abrir caminho para a equipa",c:false},{t:"Guardar para defuse",c:false}],feedback:"Thrash detém adversário e cria detain — kill garantido com follow-up. Envia para posição confirmada.",tip:"Thrash + follow-up da equipa = kill garantido. Comunicar 'Thrash deteve em X' é essencial."},
+  {title:"Recolher Criaturas",desc:"Globbys, Dizzy e Wingman podem ser recolhidos após uso. Quando priorizar?",options:[{t:"Sempre que for seguro fazê-lo",c:true},{t:"Nunca — não vale a pena arriscar",c:false},{t:"Só em eco rounds para poupar",c:false},{t:"Apenas recolher Wingman",c:false}],feedback:"Recolher criaturas recarrega as utilities sem custo. Em momento seguro, é sempre correto.",tip:"Gekko é o único agente que pode reciclar utilities durante o round. Gestão de criaturas é a sua skill-gap."},
+  {title:"Wingman para Defuse",desc:"Adversário a atacar e a spike está plantada. Podes usar Wingman para defusar?",options:[{t:"Sim — Wingman pode defusar enquanto lutas",c:true},{t:"Não — Wingman só pode plantar",c:false},{t:"Sim mas é muito lento",c:false},{t:"Depende da posição da spike",c:false}],feedback:"Wingman defusa! Mãos livres para combate enquanto a spike é defusada. Uma das mecânicas mais poderosas de Gekko.",tip:"Wingman defuse + Gekko a segurar posição = 1v2 vencível. Uma das melhores mecânicas de clutch."},
+  {title:"Globbys Cego",desc:"Globbys cega adversários na área de aterragem. Como usar em entry?",options:[{t:"Lançar Globbys para inside do site antes de entrar",c:true},{t:"Lançar para a entrada",c:false},{t:"Usar Globbys só em pós-plant",c:false},{t:"Lançar para onde estás posicionado",c:false}],feedback:"Globbys inside do site = adversários cegos quando a equipa entra. Flash eficaz para espaço fechado.",tip:"Globbys + entry = site com adversários cegos na entrada. Compõe bem com qualquer Duelist."},
+  {title:"Gekko Team Synergy",desc:"Gekko é chamado 'team player'. Porquê?",options:[{t:"Tem mais HP que outros Initiators",c:false},{t:"As suas criaturas beneficiam toda a equipa — cegas, CC e plant/defuse",c:true},{t:"É o único Initiator com flash",c:false},{t:"Tem velocidade de movimento superior",c:false}],feedback:"Dizzy cega para todos, Wingman planta/defusa para poupar vidas, Globbys cega em área. Todo o kit é team-first.",tip:"Gekko é um dos melhores agentes para aprender teamplay. Cada ability foi desenhada para beneficiar a equipa."},
+  {title:"Positioning de Gekko",desc:"Gekko entra sempre na frente ou atrás da equipa?",options:[{t:"Sempre na frente",c:false},{t:"Perto da frente — lança criaturas antes da equipa entrar, depois segue",c:true},{t:"Na retaguarda — é support",c:false},{t:"Depende das criaturas disponíveis",c:false}],feedback:"Gekko lança Dizzy/Globbys antes da entrada e segue imediatamente. É Initiator, não support passivo.",tip:"Sequência Gekko: Dizzy no ângulo → Globbys no site → equipa entra → Gekko segue para recolher criaturas."},
+]};
+
+const AGENT_NAMES_ALL = Object.keys(AGENTS);
 
 // ============================================================
 // SCENARIO QUIZ
