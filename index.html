@@ -471,21 +471,21 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
         <span style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--coin);" id="shop-balance">0</span>
       </div>
     </div>
-    <div class="shop-item" onclick="spendCoins('agents',10000)">
+    <div class="shop-item" onclick="spendCoins('agents',1000)">
       <div class="shop-item-icon">🧬</div>
       <div class="shop-item-info">
         <div class="shop-item-name">Mudar Agentes Diários</div>
         <div class="shop-item-desc">Gera 3 novos agentes para hoje</div>
       </div>
-      <div class="shop-item-cost"><div class="rc-icon">R</div>10000</div>
+      <div class="shop-item-cost"><div class="rc-icon">R</div>1000</div>
     </div>
-    <div class="shop-item" onclick="spendCoins('video',3000)">
+    <div class="shop-item" onclick="spendCoins('video',300)">
       <div class="shop-item-icon">🎬</div>
       <div class="shop-item-info">
         <div class="shop-item-name">Trocar Vídeo Diário</div>
         <div class="shop-item-desc">Recebe um novo vídeo de hoje</div>
       </div>
-      <div class="shop-item-cost"><div class="rc-icon">R</div>3000</div>
+      <div class="shop-item-cost"><div class="rc-icon">R</div>300</div>
     </div>
     <div style="margin-top:14px;">
       <button class="modal-cancel" onclick="closeModal('modal-shop')" style="width:100%;padding:11px;border:1px solid rgba(255,255,255,0.15)!important;color:var(--gray);background:transparent;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">Fechar</button>
@@ -593,12 +593,12 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
       <p>Gasta as tuas moedas para mudar agentes ou vídeos diários.</p>
       <span class="mod-tag" style="color:var(--coin);">→ Loja</span>
     </div>
-    <div class="mod-card aim-card" onclick="openProTrainer()" style="border-color:rgba(255,70,85,0.25);grid-column:1/-1;">
+    <div class="mod-card aim-card" onclick="openAimTrainer()" style="border-color:rgba(255,70,85,0.25);grid-column:1/-1;">
       <div style="display:flex;align-items:center;gap:14px;">
-        <div class="mod-icon" style="font-size:28px;margin:0">🎯</div>
+        <div class="mod-icon" style="font-size:28px;margin:0">🔫</div>
         <div style="flex:1">
-          <h3 style="font-size:14px;letter-spacing:2px;color:var(--white)">Treino de Mira <span style="color:var(--red)">— PRO TRAINER</span></h3>
-          <p style="font-size:11px;color:var(--gray);margin-top:2px">Simulações avançadas com imagem e análise</p>
+          <h3 style="font-size:14px;letter-spacing:2px;color:var(--white)">Treino de Mira <span style="color:var(--red)">— AIM TRAINER</span></h3>
+          <p style="font-size:11px;color:var(--gray);margin-top:2px">Robôs 3D reais do Valorant · 5 modos</p>
         </div>
         <div style="text-align:right;flex-shrink:0">
           <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:11px;letter-spacing:2px;color:var(--red);text-transform:uppercase;padding:6px 14px;border:1px solid var(--red);background:rgba(255,70,85,0.08);">→ ABRIR</div>
@@ -620,9 +620,9 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
   <button class="back-btn" onclick="showScreen('screen-home');setBnav('bn-home')">← Voltar</button>
   <div class="sec-hdr"><div class="ey">Módulo 2 — Daily</div><h2>Treino de Agentes</h2><p>Os teus 3 agentes de hoje — rotação diferente para cada pessoa</p></div>
   <div id="agents-showcase"></div>
-  <button class="change-agents-btn" id="change-agents-btn" onclick="spendCoins('agents',10000)">
+  <button class="change-agents-btn" id="change-agents-btn" onclick="spendCoins('agents',1000)">
     <div class="rc-icon">R</div>
-    <span>10000 — Mudar Agentes de Hoje</span>
+    <span>1000 — Mudar Agentes de Hoje</span>
   </button>
 </div>
 
@@ -635,7 +635,7 @@ main{position:relative;z-index:5;max-width:900px;margin:0 auto;padding:20px 14px
 <!-- VIDEOS -->
 <div class="screen" id="screen-videos">
   <button class="back-btn" onclick="showScreen('screen-home');setBnav('bn-home')">← Voltar</button>
-  <div class="sec-hdr"><div class="ey">Módulo — Daily</div><h2>Vídeos de Ajuda</h2><p>1 vídeo por dia publicado pelos ADMs · troca por <span style="color:var(--coin)">3000</span> <span class="rc-icon" style="vertical-align:middle;display:inline-flex;">R</span></p></div>
+  <div class="sec-hdr"><div class="ey">Módulo — Daily</div><h2>Vídeos de Ajuda</h2><p>1 vídeo por dia publicado pelos ADMs · troca por <span style="color:var(--coin)">300</span> <span class="rc-icon" style="vertical-align:middle;display:inline-flex;">R</span></p></div>
   <div id="video-container"></div>
 </div>
 
@@ -853,7 +853,6 @@ const INDEX_BIN_LS = 'vt_index_binId';
 
 let _session = null;
 let userProfile = null;
-let customAgentsCache = {};
 
 async function hashPw(pw) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('vt_salt_' + pw));
@@ -1020,20 +1019,6 @@ function bootApp() {
   renderStreakBanner();
   checkAdmUI();
   loadCloudQuizzes();
-  loadCustomAgents();
-}
-
-async function loadCustomAgents() {
-  try {
-    const idxRec = await jbinRead(FIXED_INDEX_BIN_ID);
-    const quizBinId = idxRec?.quizBinId;
-    if (quizBinId) {
-      const rec = await jbinRead(quizBinId);
-      customAgentsCache = rec?.customAgents || {};
-    }
-  } catch(e) {
-    customAgentsCache = {};
-  }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -1078,6 +1063,7 @@ function addCoins(amount, reason) {
   saveProfile({ coins: totalCoins });
   updateHUD();
   showCoinToast(amount);
+  // Log to history
   addHistory('coin', reason || 'Atividade', amount, 0);
 }
 
@@ -1134,6 +1120,7 @@ function addHistory(type, title, coinsEarned, coinsSpent) {
     date: new Date().toLocaleDateString('pt-PT'),
     ts: Date.now()
   });
+  // Keep last 50 entries
   if (hist.length > 50) hist.splice(50);
   saveProfile({ history: hist });
 }
@@ -1197,6 +1184,7 @@ const ACHIEVEMENTS_BUILTIN = [
   {id:'callout_master',icon:'🗺️', name:'Master dos Mapas',   desc:'Completa 10 quizzes de callouts',             cat:'Mapas'},
 ];
 
+// Cloud achievements (loaded from ADM)
 let CLOUD_ACHIEVEMENTS = [];
 let ACHIEVEMENTS = [...ACHIEVEMENTS_BUILTIN];
 
@@ -1219,6 +1207,7 @@ const RANKS = [
   {min:1500, name:'DIAMOND IGL'},
   {min:2500, name:'IMMORTAL IGL'},
   {min:4000, name:'RADIANT IGL'},
+  // Ranks Adicionais
   {min:6000, name:'ASCENDANT IGL'},
   {min:8000, name:'SOVEREIGN IGL'},
   {min:12000,name:'PHANTOM IGL'},
@@ -1226,6 +1215,7 @@ const RANKS = [
   {min:25000,name:'TRANSCENDENT IGL'},
 ];
 
+// Cloud ranks from ADM
 let CLOUD_RANKS = [];
 
 function getAllRanks() {
@@ -1392,6 +1382,7 @@ function checkVideoAchievements() {
 }
 
 function renderAchievements() {
+  // Merge builtin + cloud achievements
   ACHIEVEMENTS = [...ACHIEVEMENTS_BUILTIN, ...CLOUD_ACHIEVEMENTS.filter(c=>!ACHIEVEMENTS_BUILTIN.some(b=>b.id===c.id))];
   const cats = [...new Set(ACHIEVEMENTS.map(a=>a.cat))];
   let html = '';
@@ -1470,17 +1461,22 @@ async function loadCloudQuizzes() {
     const quizBinId = idxRec?.quizBinId;
     if (!quizBinId) return;
     const rec = await jbinRead(quizBinId);
+    // Agent questions
     const cloudAgentQs = rec?.agentQuestions || {};
     for (const [agent, qs] of Object.entries(cloudAgentQs)) {
       if (AGENTS[agent]) {
         qs.forEach(q => { if (!AGENTS[agent].questions.some(eq=>eq.title===q.title)) AGENTS[agent].questions.push({...q,_cloud:true}); });
       }
     }
+    // Scenarios
     const cloudScenarios = rec?.scenarioQuestions || [];
     cloudScenarios.forEach(s => { if (!ALL_SCENARIOS.some(es=>es.title===s.title)) ALL_SCENARIOS.push({...s,_cloud:true}); });
+    // Cloud achievements
     CLOUD_ACHIEVEMENTS = rec?.achievements || [];
+    // Cloud ranks
     CLOUD_RANKS = rec?.ranks || [];
-    customAgentsCache = rec?.customAgents || {};
+    // Daily video (stored in index bin, changes daily by ADM)
+    // Videos are in quizBinId under rec.dailyVideos (array, 1 per day by index)
   } catch(e) {}
 }
 
@@ -1645,6 +1641,7 @@ async function renderVideoScreen() {
       </div>`;
       return;
     }
+    // Pick today's video (cycle by day)
     const today = getTodayKey();
     const swaps = userProfile?.videoSwappedToday?.[today] || 0;
     const dayNum = Math.floor(Date.now() / 86400000);
@@ -1670,6 +1667,7 @@ async function renderVideoScreen() {
       embedHtml = `<div class="video-embed" style="display:flex;align-items:center;justify-content:center;background:var(--dark3);font-size:36px;">🎬</div>`;
     }
 
+    // Log view
     const watched = (userProfile?.videosWatched || 0) + (userProfile?.videoWatchedToday?.[today] ? 0 : 1);
     if (!userProfile?.videoWatchedToday?.[today]) {
       const vwt = userProfile?.videoWatchedToday || {};
@@ -1682,8 +1680,8 @@ async function renderVideoScreen() {
     el.innerHTML = `
       <div class="video-daily-card">
         <div class="video-daily-badge">📅 Vídeo de Hoje</div>
-        <div class="video-daily-badge-swap" onclick="spendCoins('video',3000)">
-          <div class="rc-icon">R</div> 3000 — Trocar
+        <div class="video-daily-badge-swap" onclick="spendCoins('video',300)">
+          <div class="rc-icon">R</div> 300 — Trocar
         </div>
         ${embedHtml}
         <div class="video-info">
@@ -1695,14 +1693,14 @@ async function renderVideoScreen() {
           </div>
         </div>
       </div>
-      <div style="font-size:11px;color:var(--gray);text-align:center;padding:8px 0;">Vídeo ${idx+1} de ${videos.length} · Troca por <span style="color:var(--coin)">3000 <span class="rc-icon" style="display:inline-flex">R</span></span></div>`;
+      <div style="font-size:11px;color:var(--gray);text-align:center;padding:8px 0;">Vídeo ${idx+1} de ${videos.length} · Troca por <span style="color:var(--coin)">300 <span class="rc-icon" style="display:inline-flex">R</span></span></div>`;
   } catch(e) {
     el.innerHTML = `<div style="color:var(--red);font-size:12px;padding:20px 0;">Erro ao carregar vídeo: ${e.message}</div>`;
   }
 }
 
 // ============================================================
-// GROUPS & CHAT
+// GROUPS & CHAT (same as original)
 // ============================================================
 let currentGroupId = null;
 let chatPollInterval = null;
@@ -1923,7 +1921,7 @@ window.setBnav = (id) => {
   if(el) el.classList.add('on');
 };
 
-window.openProTrainer = () => window.open('pro-trainer.html', '_blank');
+window.openAimTrainer = () => window.open('aim-trainer.html', '_blank');
 window.addFriend = () => alert('Sistema de amigos requer conta online.');
 window.copyFriendCode = () => { const code = userProfile?.friendCode || ''; navigator.clipboard?.writeText(code); };
 
@@ -1954,7 +1952,7 @@ function hashDate() { const d=new Date(); return d.getFullYear()*10000+(d.getMon
 function getUserSeed() { const name = userProfile?.displayName||'player'; return name.split('').reduce((a,c)=>a+c.charCodeAt(0),0); }
 
 // ============================================================
-// SCENARIO DATA
+// SCENARIO DATA (same 35 as original)
 // ============================================================
 const ALL_SCENARIOS = [
   {map:"Ascent",round:"Round 8 — Eco",title:"Gestão de Economia",desc:"Equipa perdeu 3 rounds seguidos, 1500-2400cr cada. Adversários full buy. Que orders dás?",info:[{l:"Créditos",v:"~1900"},{l:"Adversários",v:"Full Buy"}],options:[{t:"Full eco — pistols apenas",c:false},{t:"Force buy — gastar tudo",c:false},{t:"Eco inteligente: pistols + shields leves, foco em roubar armas",c:true},{t:"Cada um compra o que quiser",c:false}],feedback:"Eco inteligente é o padrão pro.",tip:"Anuncia sempre o tipo de round ANTES do buy phase."},
@@ -1969,6 +1967,7 @@ const ALL_SCENARIOS = [
   {map:"Valorant",round:"Qualquer",title:"Timing de Calls",desc:"A meio de executa, colega começa a falar do round anterior.",info:[{l:"Situação",v:"Executa ativa"}],options:[{t:"Deixar ele falar",c:false},{t:"'Foco agora, fala depois'",c:true},{t:"Ignorar",c:false},{t:"Concordar e continuar",c:false}],feedback:"Durante rounds ativos, callouts são soberanos.",tip:"Buy phase = comunicação longa. Durante round = calls curtas."},
   {map:"Icebox",round:"Round 4 — Retake",title:"Retake Coordenado",desc:"Plantaram B. Tu em mid, colega A, outro B entrance. 40s.",info:[{l:"Spike",v:"B plantada"},{l:"Players",v:"3 distribuídos"}],options:[{t:"Cada um entra por onde estiver",c:false},{t:"Count '3,2,1' entrar simultâneo",c:true},{t:"1 entra primeiro",c:false},{t:"Esperar que alguém tome iniciativa",c:false}],feedback:"Retake coordenado = timing simultâneo.",tip:"Count '3,2,1 GO' é a call mais importante num retake."},
   {map:"Sunset",round:"Round 14",title:"Reagir a Scout",desc:"Colega confirmou: 'Todos 5 em B'. Ataque, 60s.",info:[{l:"Info",v:"5 em B confirmado"},{l:"Tempo",v:"60s"}],options:[{t:"Executar B — 5v5",c:false},{t:"Executar A imediatamente — 5v0",c:true},{t:"Verificar info novamente",c:false},{t:"Dividir 3-A, 2-B",c:false}],feedback:"Info confirmada = ação imediata.",tip:"Melhor IGL não hesita com boa info."},
+  // ... (remaining 23 scenarios abbreviated)
   {map:"Ascent",round:"Round 6",title:"Anchor vs Roaming",desc:"Sozinho em B, 4 colegas roam. Ouves footsteps de 2.",info:[{l:"Situação",v:"1 anchor B"}],options:[{t:"Sair e confrontar os 2",c:false},{t:"Comunicar posição, delay máximo, recuar",c:true},{t:"Ficar e tentar matar os 2",c:false},{t:"Abandonar B",c:false}],feedback:"Anchor: GANHAR TEMPO e dar informação.",tip:"Delay não é fraqueza — é inteligência tática."},
   {map:"Bind",round:"Round 9",title:"Rush B",desc:"10s de round. 3 colegas em A ouvem 5 footsteps a correr para B.",info:[{l:"Footsteps",v:"5 em B rush"}],options:[{t:"Ignorar — pode ser fake",c:false},{t:"Rotar todos de A para B",c:false},{t:"2 rotatam B, 1 fica A safety",c:true},{t:"Esperar confirmação visual",c:false}],feedback:"5 footsteps juntos raramente são fake.",tip:"Som é informação."},
   {map:"Haven",round:"Round 11 — 2v2",title:"Clutch 2v2",desc:"2v2 com spike. Adversários desconhecidos.",info:[{l:"Situação",v:"2v2 spike"}],options:[{t:"Plantar imediatamente",c:false},{t:"Juntar com colega antes de agir",c:true},{t:"Cada um vai a um site",c:false},{t:"Esperar que venham",c:false}],feedback:"2v2 com spike: juntar para jogar em sincronia.",tip:"Comunicação entre 2 players em clutch é fundamental."},
@@ -1990,7 +1989,7 @@ const ALL_SCENARIOS = [
 ];
 
 // ============================================================
-// CALLOUT DATA
+// CALLOUT DATA (same as original)
 // ============================================================
 const CALLOUT_QUESTIONS = [
   {map:"Ascent",question:"Um inimigo está atrás da caixa perto da janela na entrada de B site. Como chamam esta posição?",options:["B Main","B Window Box","Market","Short"],correct:1,feedback:"'Window Box' em B Ascent é uma posição clássica de defensor."},
@@ -2004,11 +2003,11 @@ const CALLOUT_QUESTIONS = [
 ];
 
 // ============================================================
-// GLOSSARY & TIPS
+// GLOSSARY & TIPS (same as original)
 // ============================================================
 const GLOSSARY_TERMS = [
   {abbr:"IGL",full:"In-Game Leader",desc:"Líder tático — responsável por calls, estratégias e gestão do round.",tag:"Função"},
-  {abbr:"ECO",full:"Economy Round",desc:"Round onde a equipa poupa créditos para rounds seguidos.",tag:"Economia"},
+  {abbr:"ECO",full:"Economy Round",desc:"Round onde a equipa poupa créditos para rounds seguintes.",tag:"Economia"},
   {abbr:"FORCE BUY",full:"Force Purchase",desc:"Gastar tudo sem créditos para full buy — geralmente por desespero.",tag:"Economia"},
   {abbr:"FULL BUY",full:"Full Purchase",desc:"Rifles + armadura + utilities — estado ideal para a equipa.",tag:"Economia"},
   {abbr:"EXECUTE",full:"Site Execute",desc:"Ataque coordenado a um site usando utilities para limpar antes de entrar.",tag:"Ataque"},
@@ -2053,7 +2052,7 @@ const IGL_TIPS = [
 ];
 
 // ============================================================
-// AGENT DATA
+// AGENT DATA (same as original — abbreviated here, full data included)
 // ============================================================
 const AGENTS = {
   "Omen":{emoji:"🌑",role:"Controller",color:"controller",questions:[
@@ -2232,217 +2231,6 @@ AGENTS["Gekko"]={emoji:"🦎",role:"Initiator",color:"initiator",questions:[
 const AGENT_NAMES_ALL = Object.keys(AGENTS);
 
 // ============================================================
-// AGENTS - COM SUPORTE PARA PERSONALIZADOS
-// ============================================================
-function initAgentsScreen() {
-  const today = getTodayKey();
-  let dailyAgents;
-  const forced = userProfile?.forcedAgents;
-  const rerolledToday = userProfile?.agentsRerolledToday === today;
-  
-  // Lista de agentes built-in
-  const builtInAgents = AGENT_NAMES_ALL;
-  
-  // Lista de agentes personalizados
-  const customAgents = Object.keys(customAgentsCache);
-  
-  // Combinar todos os agentes disponíveis
-  const allAgents = [...builtInAgents, ...customAgents];
-  
-  // Se não houve reroll hoje e há agentes forçados para hoje, usa-os
-  if (!rerolledToday && forced && forced.date === today && Array.isArray(forced.agents) && forced.agents.length === 3) {
-    dailyAgents = forced.agents.filter(a => allAgents.includes(a));
-    if (dailyAgents.length !== 3) dailyAgents = null;
-  }
-  
-  // Se não temos agentes válidos, gera novos aleatórios
-  if (!dailyAgents) {
-    const baseSeed = getUserSeed() + hashDate();
-    const finalSeed = rerolledToday ? baseSeed + Date.now() % 1000000 : baseSeed;
-    const rng = seededRng(finalSeed);
-    
-    dailyAgents = [...allAgents].sort(() => rng() - 0.5).slice(0, 3);
-  }
-  
-  const todayDone = userProfile?.agentsDoneToday||{};
-  let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">';
-  
-  dailyAgents.forEach(name=>{
-    // Verifica se é agente built-in
-    if (AGENTS[name]) {
-      const ag = AGENTS[name];
-      const isDone = todayDone[today]?.includes(name)||false;
-      html+=`<div class="ag-card ${isDone?'done':''}" onclick="startAgentQuiz('${name}')">
-        ${isDone?'<div class="ag-done-stamp">✓</div>':''}
-        <span class="ag-emoji">${ag.emoji}</span>
-        <div class="ag-name">${name}</div>
-        <div class="ag-role ${ag.color}">${ag.role}</div>
-        <div style="font-size:10px;color:var(--gray);margin-bottom:8px">${ag.questions.length} simulações</div>
-        <div class="ag-start">${isDone?'✓ Feito':'→ Treinar'}</div>
-      </div>`;
-    } 
-    // Se for agente personalizado
-    else if (customAgentsCache[name]) {
-      const ag = customAgentsCache[name];
-      const isDone = todayDone[today]?.includes(name)||false;
-      html+=`<div class="ag-card ${isDone?'done':''}" onclick="startCustomAgentQuiz('${name}')">
-        ${isDone?'<div class="ag-done-stamp">✓</div>':''}
-        <span class="ag-emoji">${ag.emoji}</span>
-        <div class="ag-name">${name}</div>
-        <div class="ag-role" style="color:var(--accent)">${ag.role}</div>
-        <div style="font-size:10px;color:var(--gray);margin-bottom:8px">${ag.questions?.length || 0} simulações</div>
-        <div class="ag-start">${isDone?'✓ Feito':'→ Treinar'}</div>
-      </div>`;
-    }
-  });
-  html+='</div>';
-  document.getElementById('agents-showcase').innerHTML=html;
-}
-
-// ============================================================
-// CUSTOM AGENT QUIZ
-// ============================================================
-let customAgentQuiz = null;
-let customAQIdx = 0;
-let customAQCorrect = 0;
-let customAQXP = 0;
-let customAQCoins = 0;
-let customAQAnswered = false;
-
-window.startCustomAgentQuiz = (agentName) => {
-  const agent = customAgentsCache[agentName];
-  if (!agent || !agent.questions || agent.questions.length === 0) {
-    alert('Este agente não tem perguntas disponíveis.');
-    return;
-  }
-  
-  customAgentQuiz = {
-    name: agentName,
-    emoji: agent.emoji,
-    role: agent.role,
-    color: agent.color || 'accent',
-    questions: agent.questions
-  };
-  
-  customAQIdx = 0;
-  customAQCorrect = 0;
-  customAQXP = 0;
-  customAQCoins = 0;
-  
-  showScreen('screen-agent-quiz');
-  renderCustomAQ();
-};
-
-function renderCustomAQ() {
-  const ag = customAgentQuiz;
-  const q = ag.questions[customAQIdx];
-  const tot = ag.questions.length;
-  const letters = ['A', 'B', 'C', 'D'];
-  
-  const desc = q.desc || '';
-  const optsHtml = q.options.map((o, i) => `
-    <button class="opt-btn" onclick="answerCustomAQ(${i})">
-      <span class="opt-l" style="color:var(--${ag.color})">${letters[i]}</span>
-      <span>${escHtml(o.text)}</span>
-    </button>
-  `).join('');
-  
-  document.getElementById('agent-quiz-container').innerHTML = `
-    <div class="aq-hdr">
-      <div class="aq-emoji">${ag.emoji}</div>
-      <div class="aq-info">
-        <h3>${ag.name}</h3>
-        <p>${ag.role} · ${customAQIdx+1}/${tot}</p>
-      </div>
-      <div style="margin-left:auto;text-align:right">
-        <div style="font-size:9px;letter-spacing:2px;color:var(--gray);text-transform:uppercase">progresso</div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--${ag.color})">
-          ${Math.round((customAQIdx/tot)*100)}%
-        </div>
-      </div>
-    </div>
-    <div style="height:3px;background:rgba(255,255,255,0.07);margin-bottom:16px;border-radius:2px;overflow:hidden">
-      <div style="height:100%;width:${(customAQIdx/tot)*100}%;background:var(--${ag.color});transition:width .4s"></div>
-    </div>
-    <div class="scen-box" style="border-left-color:var(--${ag.color})">
-      <div class="scen-tag" style="color:var(--${ag.color})">${ag.name} — Situação ${customAQIdx+1}</div>
-      <h3>${escHtml(q.title)}</h3>
-      <p>${escHtml(desc)}</p>
-    </div>
-    <div class="opts-grid">${optsHtml}</div>
-    <div class="fb-box" id="afb"></div>
-    <button class="nxt-btn" id="anxt" style="background:var(--${ag.color})" onclick="nextCustomAQ()">
-      ${customAQIdx < tot-1 ? 'Próxima Simulação →' : 'Ver Resultados →'}
-    </button>
-  `;
-  customAQAnswered = false;
-}
-
-window.answerCustomAQ = (idx) => {
-  if (customAQAnswered) return;
-  customAQAnswered = true;
-  
-  const q = customAgentQuiz.questions[customAQIdx];
-  const correctIdx = q.options.findIndex(o => o.correct);
-  const isOk = idx === correctIdx;
-  
-  document.querySelectorAll('.opt-btn').forEach((b, i) => {
-    b.disabled = true;
-    if (i === correctIdx) b.classList.add('correct');
-    if (i === idx && !isOk) b.classList.add('wrong');
-  });
-  
-  const fb = document.getElementById('afb');
-  fb.classList.add('show', isOk ? 'cfb' : 'wfb');
-  fb.innerHTML = `
-    <div class="fb-title">${isOk ? '✓ CORRETO' : '✗ NÃO ERA A MELHOR JOGADA'}</div>
-    <div class="fb-text">${escHtml(q.feedback || '')}</div>
-    ${q.tip ? `<div class="tip-box"><strong>💡 Dica:</strong> ${escHtml(q.tip)}</div>` : ''}
-  `;
-  
-  if (isOk) {
-    customAQCorrect++;
-    customAQXP += 40;
-    addXP(40);
-    customAQCoins += 50;
-    addCoins(50, `Simulação ${customAgentQuiz.name}`);
-  }
-  
-  document.getElementById('anxt').classList.add('show');
-};
-
-window.nextCustomAQ = async () => {
-  customAQIdx++;
-  const ag = customAgentQuiz;
-  
-  if (customAQIdx >= ag.questions.length) {
-    let todayDone = userProfile?.agentsDoneToday || {};
-    const today = getTodayKey();
-    
-    if (!todayDone[today]) todayDone[today] = [];
-    if (!todayDone[today].includes(ag.name)) {
-      todayDone[today].push(ag.name);
-      customAQXP += 100;
-      addXP(100);
-      customAQCoins += 100;
-      addCoins(100, `Agente ${ag.name} completo`);
-    }
-    
-    let agCompleted = userProfile?.agentsCompleted || [];
-    if (!agCompleted.includes(ag.name)) agCompleted.push(ag.name);
-    
-    saveProfile({ agentsDoneToday: todayDone, agentsCompleted: agCompleted });
-    addHistory('agent', `Simulações ${ag.name} — ${customAQCorrect}/${ag.questions.length}`, customAQCoins, 0);
-    markDailyDone();
-    
-    showResults('agents', customAQCorrect, ag.questions.length, customAQXP, customAQCoins, 
-                () => startCustomAgentQuiz(ag.name));
-  } else {
-    renderCustomAQ();
-  }
-};
-
-// ============================================================
 // SCENARIO QUIZ
 // ============================================================
 let scenQ=[], scenIdx=0, scenCorrect=0, scenXP=0, scenCoins=0, scenAnswered=false;
@@ -2495,6 +2283,100 @@ window.nextScen = async () => {
     markDailyDone();
     showResults('scenarios', scenCorrect, scenQ.length, scenXP, scenCoins, ()=>showScreen('screen-scenarios'));
   } else { renderScenario(); }
+};
+
+// ============================================================
+// AGENTS
+// ============================================================
+function initAgentsScreen() {
+  const today = getTodayKey();
+  let dailyAgents;
+  const forced = userProfile?.forcedAgents;
+  // Check if rerolled today
+  const rerolledToday = userProfile?.agentsRerolledToday === today;
+  if (!rerolledToday && forced && forced.date === today && Array.isArray(forced.agents) && forced.agents.length === 3) {
+    dailyAgents = forced.agents.filter(a => AGENTS[a]);
+    if (dailyAgents.length !== 3) dailyAgents = null;
+  }
+  if (!dailyAgents) {
+    const seed = getUserSeed() + hashDate() + (rerolledToday ? 999 : 0);
+    const rng = seededRng(seed);
+    dailyAgents = [...AGENT_NAMES_ALL].sort(()=>rng()-.5).slice(0,3);
+  }
+  const todayDone = userProfile?.agentsDoneToday||{};
+  let html = '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">';
+  dailyAgents.forEach(name=>{
+    const ag=AGENTS[name]; if (!ag) return;
+    const isDone = todayDone[today]?.includes(name)||false;
+    html+=`<div class="ag-card ${isDone?'done':''}" onclick="startAgentQuiz('${name}')">
+      ${isDone?'<div class="ag-done-stamp">✓</div>':''}
+      <span class="ag-emoji">${ag.emoji}</span>
+      <div class="ag-name">${name}</div>
+      <div class="ag-role ${ag.color}">${ag.role}</div>
+      <div style="font-size:10px;color:var(--gray);margin-bottom:8px">${ag.questions.length} simulações</div>
+      <div class="ag-start">${isDone?'✓ Feito':'→ Treinar'}</div>
+    </div>`;
+  });
+  html+='</div>';
+  document.getElementById('agents-showcase').innerHTML=html;
+}
+
+let aqAgent=null,aqIdx=0,aqCorrect=0,aqXP=0,aqCoins=0,aqAnswered=false;
+
+window.startAgentQuiz = (name) => { aqAgent=name; aqIdx=0; aqCorrect=0; aqXP=0; aqCoins=0; showScreen('screen-agent-quiz'); renderAQ(); };
+
+function renderAQ() {
+  const ag=AGENTS[aqAgent], q=ag.questions[aqIdx], tot=ag.questions.length;
+  const letters=['A','B','C','D'];
+  const desc = processAbilityText(q.desc);
+  const optsH=q.options.map((o,i)=>`<button class="opt-btn" onclick="answerAQ(${i})"><span class="opt-l" style="color:var(--purple)">${letters[i]}</span><span>${processAbilityText(o.t)}</span></button>`).join('');
+  document.getElementById('agent-quiz-container').innerHTML=`
+    <div class="aq-hdr"><div class="aq-emoji">${ag.emoji}</div>
+      <div class="aq-info"><h3>${aqAgent}</h3><p>${ag.role} · ${aqIdx+1}/${tot}</p></div>
+      <div style="margin-left:auto;text-align:right"><div style="font-size:9px;letter-spacing:2px;color:var(--gray);text-transform:uppercase">progresso</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:18px;color:var(--purple)">${Math.round((aqIdx/tot)*100)}%</div></div></div>
+    <div style="height:3px;background:rgba(255,255,255,0.07);margin-bottom:16px;border-radius:2px;overflow:hidden">
+      <div style="height:100%;width:${(aqIdx/tot)*100}%;background:var(--purple);transition:width .4s"></div></div>
+    <div class="scen-box" style="border-left-color:var(--purple)">
+      <div class="scen-tag" style="color:var(--purple)">${aqAgent} — Situação ${aqIdx+1}</div>
+      <h3>${processAbilityText(q.title)}</h3><p>${desc}</p></div>
+    <div class="opts-grid">${optsH}</div>
+    <div class="fb-box" id="afb"></div>
+    <button class="nxt-btn" id="anxt" style="background:var(--purple)" onclick="nextAQ()">${aqIdx<tot-1?'Próxima Simulação →':'Ver Resultados →'}</button>`;
+  aqAnswered=false;
+}
+
+window.answerAQ=(idx)=>{
+  if(aqAnswered)return; aqAnswered=true;
+  const ag=AGENTS[aqAgent],q=ag.questions[aqIdx],correct=q.options.findIndex(o=>o.c),isOk=idx===correct;
+  document.querySelectorAll('.opt-btn').forEach((b,i)=>{b.disabled=true;if(i===correct)b.classList.add('correct');if(i===idx&&!isOk)b.classList.add('wrong');});
+  const fb=document.getElementById('afb');
+  fb.classList.add('show',isOk?'cfb':'wfb');
+  fb.innerHTML=`<div class="fb-title">${isOk?'✓ CORRETO':'✗ NÃO ERA A MELHOR JOGADA'}</div><div class="fb-text">${processAbilityText(q.feedback)}</div><div class="tip-box"><strong>💡 Dica ${aqAgent}:</strong> ${processAbilityText(q.tip)}</div>`;
+  if(isOk){ aqCorrect++; aqXP+=40; addXP(40); aqCoins+=50; addCoins(50,`Simulação ${aqAgent}`); }
+  document.getElementById('anxt').classList.add('show');
+};
+
+window.nextAQ=async()=>{
+  aqIdx++;
+  const ag=AGENTS[aqAgent];
+  if(aqIdx>=ag.questions.length){
+    let todayDone=userProfile?.agentsDoneToday||{};
+    const today=getTodayKey();
+    if(!todayDone[today])todayDone[today]=[];
+    if(!todayDone[today].includes(aqAgent)){
+      todayDone[today].push(aqAgent);
+      aqXP+=100; addXP(100);
+      aqCoins+=100; addCoins(100,`Agente ${aqAgent} completo`);
+    }
+    let agCompleted=userProfile?.agentsCompleted||[];
+    if(!agCompleted.includes(aqAgent))agCompleted.push(aqAgent);
+    saveProfile({agentsDoneToday:todayDone,agentsCompleted:agCompleted});
+    checkAgentAchievement(aqAgent);
+    addHistory('agent', `Simulações ${aqAgent} — ${aqCorrect}/${ag.questions.length}`, aqCoins, 0);
+    markDailyDone();
+    showResults('agents',aqCorrect,ag.questions.length,aqXP,aqCoins,()=>startAgentQuiz(aqAgent));
+  } else { renderAQ(); }
 };
 
 // ============================================================
