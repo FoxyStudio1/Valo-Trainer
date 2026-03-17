@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Pro Trainer — Foxy'Studio</title>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#ff4655;--gold:#e8c97a;--white:#ece8e1;--gray:#9b9b9b;
+  --dark:#0f1923;--dark2:#1a2634;--dark3:#243447;
+  --accent:#00c8ff;--green:#4ade80;--purple:#a78bfa;
+  --coin:#f4c430;--coin-dark:#c9960a;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dark);color:var(--white);font-family:'Barlow',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:0;}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,70,85,0.2);background:rgba(15,25,35,0.97);backdrop-filter:blur(12px);}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-text h1{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;}
+.logo-text h1 span{color:var(--red);}
+.logo-text small{font-size:8px;letter-spacing:2px;color:var(--gray);text-transform:uppercase;}
+.pro-badge{padding:4px 10px;background:linear-gradient(135deg,rgba(255,70,85,0.2),rgba(232,201,122,0.15));border:1px solid rgba(232,201,122,0.4);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;}
+.back-home{padding:6px 14px;background:none;border:1px solid rgba(255,255,255,0.12);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+.back-home:hover{border-color:rgba(255,70,85,0.4);color:var(--white);}
+
+/* MAIN */
+main{position:relative;z-index:5;max-width:700px;margin:0 auto;padding:24px 14px 40px;}
+
+/* LOADING / EMPTY STATE */
+.state-box{text-align:center;padding:60px 20px;}
+.state-icon{font-size:56px;margin-bottom:16px;display:block;}
+.state-title{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:22px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.state-desc{font-size:13px;color:var(--gray);line-height:1.7;max-width:320px;margin:0 auto;}
+
+/* PROGRESS BAR */
+.prog-wrap{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.prog-label{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--red);white-space:nowrap;}
+.prog-bar{flex:1;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transition:width .5s ease;}
+.prog-count{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--gray);white-space:nowrap;}
+
+/* QUESTION CARD */
+.q-card{background:var(--dark2);border:1px solid rgba(255,255,255,0.07);overflow:hidden;margin-bottom:14px;animation:fadeUp .3s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* SITUATION IMAGE */
+.q-img-wrap{width:100%;aspect-ratio:16/9;background:var(--dark3);position:relative;overflow:hidden;}
+.q-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.q-img-placeholder{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,0.15);}
+.q-img-placeholder .ph-icon{font-size:40px;}
+.q-img-placeholder .ph-txt{font-family:'Barlow Condensed',sans-serif;font-size:10px;letter-spacing:3px;text-transform:uppercase;}
+
+/* CONTEXT BAR */
+.q-ctx{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,0.06);}
+.q-ctx-item{flex:1;padding:8px 12px;display:flex;flex-direction:column;gap:2px;border-right:1px solid rgba(255,255,255,0.06);}
+.q-ctx-item:last-child{border-right:none;}
+.q-ctx-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);font-weight:600;}
+.q-ctx-val{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--accent);}
+.q-ctx-val.money{color:var(--coin);}
+.q-ctx-val.round{color:var(--gold);}
+
+/* QUESTION BODY */
+.q-body{padding:18px 16px 14px;}
+.q-tag{display:inline-flex;align-items:center;gap:5px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--red);font-weight:600;margin-bottom:10px;}
+.q-tag::before{content:'';width:5px;height:5px;background:var(--red);border-radius:50%;flex-shrink:0;}
+.q-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:18px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.q-desc{color:var(--gray);font-size:13px;line-height:1.7;}
+.q-extra{margin-top:10px;padding:8px 12px;background:rgba(0,200,255,0.05);border-left:2px solid rgba(0,200,255,0.3);font-size:11px;color:rgba(0,200,255,0.8);line-height:1.6;}
+
+/* OPTIONS — 3 respostas */
+.opts{display:grid;gap:8px;padding:0 16px 16px;}
+.opt-btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);padding:14px 16px;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:10px;color:var(--white);font-family:'Barlow',sans-serif;font-size:13px;line-height:1.5;width:100%;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.opt-btn:active:not(:disabled){border-color:rgba(255,70,85,0.5);background:var(--dark3);}
+.opt-btn:disabled{cursor:default;}
+.opt-btn.correct{border-color:var(--green);background:rgba(74,222,128,0.07);}
+.opt-btn.wrong{border-color:var(--red);background:rgba(255,70,85,0.07);}
+.opt-letter{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:16px;color:var(--red);min-width:20px;line-height:1.2;flex-shrink:0;}
+.opt-btn.correct .opt-letter{color:var(--green);}
+.opt-btn.wrong .opt-letter{color:var(--red);}
+
+/* FEEDBACK */
+.feedback-box{margin:0 16px 16px;padding:14px 16px;border:1px solid rgba(255,255,255,0.07);display:none;animation:fadeUp .3s ease;}
+.feedback-box.show{display:block;}
+.feedback-box.correct{border-color:rgba(74,222,128,0.3);background:rgba(74,222,128,0.04);}
+.feedback-box.wrong{border-color:rgba(255,70,85,0.3);background:rgba(255,70,85,0.04);}
+.fb-title{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
+.feedback-box.correct .fb-title{color:var(--green);}
+.feedback-box.wrong .fb-title{color:var(--red);}
+.fb-text{font-size:12px;color:var(--gray);line-height:1.7;}
+
+/* ANSWER IMAGE */
+.answer-img-wrap{margin:10px 0 0;width:100%;aspect-ratio:16/9;background:var(--dark3);overflow:hidden;position:relative;}
+.answer-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
+.answer-img-label{position:absolute;top:8px;left:8px;background:rgba(74,222,128,0.85);color:#0f1923;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;}
+.feedback-box.wrong .answer-img-label{background:rgba(255,255,255,0.85);}
+
+/* NEXT BUTTON */
+.nxt-btn{display:none;width:calc(100% - 32px);margin:0 16px 16px;padding:14px;background:var(--red);border:none;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+.nxt-btn.show{display:block;}
+
+/* RESULTS */
+.results-screen{text-align:center;padding:40px 16px 24px;animation:fadeUp .3s ease;}
+.res-grade{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:clamp(72px,20vw,120px);line-height:1;background:linear-gradient(135deg,var(--red),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.res-label{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.res-desc{font-size:13px;color:var(--gray);max-width:340px;margin:0 auto 24px;line-height:1.7;}
+.res-stats{display:flex;justify-content:center;gap:28px;margin-bottom:28px;}
+.rstat-n{font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:36px;color:var(--white);}
+.rstat-l{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-top:2px;}
+.btn-red{padding:13px 28px;background:var(--red);border:none;color:white;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;}
+.btn-ghost{padding:13px 28px;background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--gray);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;margin-left:8px;}
+
+/* XP TOAST */
+#xp-toast{position:fixed;top:70px;right:14px;background:var(--dark3);border:1px solid rgba(232,201,122,0.4);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;color:var(--gold);z-index:9998;opacity:0;transform:translateY(-8px);transition:all .3s;pointer-events:none;}
+#xp-toast.show{opacity:1;transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<div id="xp-toast">+0 XP</div>
+
+<header>
+  <div class="logo">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAAVE0lEQVR4nM1beXhU1dn/nXPvnX0mM5NM1iEEkkASCASGfRvDomK1oDCo1A2roHZR236Pbb9Ph3Fpn362ttSnVRGV6qOlDLhi6y4B2YSALEkAA4SQfZiZzL7ce8/3x8xgQG3JQr/+nmf+uDNz3nN+97znfd/znvcAlxlOgIJ89Xy9wbTmrqIxffeVVvbdrCtYk/6eEMAO8Jd7PORf/2VwsMPO7yA7RMYYtBAq52gt5ZUW088nZWonjdWqJE2cw9moxH0eDBw8GfD/5tXOU+8AiFBCMHfePL6mpka8HOMabsLECZC1TieIyyUD4Kq15vvKDFl/rM6zotSoA/gEusN94CIiCrQmgFC0hCI46PF9/klr+/r3Yp0vA0gwp5OudbngAhiSn+EZ4HAJcgDcFkBKj2ymIf+mySb1w7OyjBUTDdoozytVzSKwx+tr3Nd6bp8sSZiYXzB9rtFYUgqASAxHYwnU+Hx1x6Ohxz9sO7sJACghWMYY5wak4RjnUAlTO0C3MyYRQhgAOs+UddVko+Hh8abcmRO1BmQoeNYiRshuf3dTfa/v9681N28C0JVqn329tfDGMp3+JzMyjEUlahUADvWxBA73evd80d392DZv6/sAZMYYcZMVdAXcQyI+aMJOgLoAOS1nVkbGDbMzCu+pMuoXVhoBldKA1iDD7l5vtDHscb7U0vgnACEC4G7YBKAWzwOJlEZoV1hH/6BcofrlnKzMjBE6AxIJhvpQBHuj/o92NTc+97mwbwsAOO12HjU18mBVfcCEHQC32elkxOWSFVCUz1HrxpXkmR+0mcyzZmkM0FKKs5BxoKur5VC3d98ub/CFs5L3HxTAJoeDW+F2y/0GSjY7HPRGtzu9FCzLzPk/m2g23TrNkp2Xr1JDJAwNIT+OeDx7z4UST7zW1rgNGLyqXzLh/kQBYK7JNKtYm/3WQpMla1KGCSoVQWusCwf8gY4dAfLMm6ePvQygCQBW22zC+tpaEd8+I8Rpt3OulGXOAIrs1sLbqvT6e+fr9LnZKgOYoMHxQAC1no6PD3iaH/nAG9gNAIwxspYQ4krKkb9F/qUTdgCcyWaj62trEwBg05oXTc7LuafKZLxhmk7PssGzzliCftrniR2Mep7824kzfwTQDQCrYRPyUCu5LmEg54kDnAtIuyTL1Tk5P56Umftf8zMsymKeR4KJOBz141g49Maejo18cWAqvKjBUFZiqJeQAAAABJRU5ErkJggg==" style="width:30px;height:30px;object-fit:contain;">
+    <div class="logo-text">
+      <h1>Foxy<span>'</span>Studio</h1>
+      <small>Valo Trainer</small>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="pro-badge">🏆 Pro Trainer</div>
+    <button class="back-home" onclick="window.close()">← Fechar</button>
+  </div>
+</header>
+
+<main id="main-content">
+  <!-- Conteúdo gerado por JS -->
+</main>
+
+<script>
+// ============================================================
+// CONFIG — igual ao index.html
+// ============================================================
+const JBIN_KEY  = '$2a$10$XukuamUMRwoCs9MgtAKageEiXx9pMZ5teO/HmD735XaJvoLKwwNA6';
+const JBIN_BASE = 'https://api.jsonbin.io/v3';
+const FIXED_INDEX_BIN_ID = '69b400e4c3097a1dd520a506';
+
+// ============================================================
+// STATE
+// ============================================================
+let questions = [];    // carregadas do JSONbin
+let qIdx = 0;
+let correct = 0;
+let answered = false;
+let xpEarned = 0;
+
+// ============================================================
+// INIT
+// ============================================================
+window.addEventListener('DOMContentLoaded', async () => {
+  renderLoading();
+  await loadQuestions();
+});
+
+async function loadQuestions() {
+  try {
+    const idxRec = await jbinRead(FIXED_INDEX_BIN_ID);
+    const quizBinId = idxRec?.quizBinId;
+    if (quizBinId) {
+      const rec = await jbinRead(quizBinId);
+      questions = rec?.proTrainer || [];
+    }
+  } catch(e) {
+    questions = [];
+  }
+
+  if (!questions.length) {
+    renderEmpty();
+  } else {
+    qIdx = 0; correct = 0; xpEarned = 0;
+    renderQuestion();
+  }
+}
+
+async function jbinRead(binId) {
+  const r = await fetch(`${JBIN_BASE}/b/${binId}/latest`, { headers: { 'X-Master-Key': JBIN_KEY } });
+  const j = await r.json();
+  return j.record || null;
+}
+
+// ============================================================
+// RENDER STATES
+// ============================================================
+function renderLoading() {
+  document.getElementById('main-content').innerHTML = `
+    <div class="state-box">
+      <span class="state-icon">⏳</span>
+      <div class="state-title">A carregar...</div>
+      <div class="state-desc">A buscar as simulações Pro.</div>
+    </div>`;
+}
+
+function renderEmpty() {
+  document.getElementById('main-content').innerHTML = `
+    <div class="state-box">
+      <span class="state-icon">🏆</span>
+      <div class="state-title">Pro Trainer</div>
+      <div class="state-desc">
+        Os ADMs ainda não publicaram simulações Pro.<br><br>
+        Em breve terás acesso a cenários avançados com imagem, situações reais de jogo e análise detalhada.
+      </div>
+      <div style="margin-top:24px;font-size:10px;letter-spacing:3px;color:var(--red);text-transform:uppercase;font-weight:600;font-family:'Barlow Condensed',sans-serif;">Em Breve</div>
+    </div>`;
+}
+
+// ============================================================
+// RENDER QUESTION
+// ============================================================
+function renderQuestion() {
+  const q = questions[qIdx];
+  const total = questions.length;
+  const pct = Math.round((qIdx / total) * 100);
+  const letters = ['A', 'B', 'C'];
+
+  // Context chips
+  const ctxHtml = [
+    q.round ? `<div class="q-ctx-item"><span class="q-ctx-label">Ronda</span><span class="q-ctx-val round">${q.round}</span></div>` : '',
+    q.money ? `<div class="q-ctx-item"><span class="q-ctx-label">Dinheiro</span><span class="q-ctx-val money">${q.money}</span></div>` : '',
+    q.map   ? `<div class="q-ctx-item"><span class="q-ctx-label">Mapa</span><span class="q-ctx-val">${q.map}</span></div>` : '',
+  ].filter(Boolean).join('');
+
+  // Situation image
+  const situImgHtml = q.situationImg
+    ? `<img src="${escHtml(q.situationImg)}" alt="Situação" loading="lazy">`
+    : `<div class="q-img-placeholder"><span class="ph-icon">📸</span><span class="ph-txt">Imagem da Situação</span></div>`;
+
+  // Options (3)
+  const opts = (q.options || []).slice(0, 3);
+  const optsHtml = opts.map((o, i) => `
+    <button class="opt-btn" onclick="answerQ(${i})">
+      <span class="opt-letter">${letters[i]}</span>
+      <span>${escHtml(o.text || o.t || '')}</span>
+    </button>`).join('');
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="prog-wrap">
+      <span class="prog-label">Pro Trainer</span>
+      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
+      <span class="prog-count">${qIdx + 1}/${total}</span>
+    </div>
+
+    <div class="q-card">
+      <div class="q-img-wrap">${situImgHtml}</div>
+      ${ctxHtml ? `<div class="q-ctx">${ctxHtml}</div>` : ''}
+      <div class="q-body">
+        <div class="q-tag">${q.map || 'Simulação Pro'} ${q.round ? '— ' + q.round : ''}</div>
+        <div class="q-title">${escHtml(q.title || 'Situação')}</div>
+        <div class="q-desc">${escHtml(q.desc || q.question || '')}</div>
+        ${q.extra ? `<div class="q-extra">💡 ${escHtml(q.extra)}</div>` : ''}
+      </div>
+      <div class="opts" id="opts-container">${optsHtml}</div>
+      <div class="feedback-box" id="feedback-box"></div>
+      <button class="nxt-btn" id="nxt-btn" onclick="nextQ()">
+        ${qIdx < total - 1 ? 'Próxima Simulação →' : 'Ver Resultados →'}
+      </button>
+    </div>`;
+
+  answered = false;
+}
+
+// ============================================================
+// ANSWER
+// ============================================================
+window.answerQ = (idx) => {
+  if (answered) return;
+  answered = true;
+
+  const q = questions[qIdx];
+  const opts = (q.options || []).slice(0, 3);
+  const correctIdx = opts.findIndex(o => o.correct === true || o.c === true);
+  const isOk = idx === correctIdx;
+
+  // Style buttons
+  document.querySelectorAll('.opt-btn').forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === correctIdx) btn.classList.add('correct');
+    if (i === idx && !isOk) btn.classList.add('wrong');
+  });
+
+  if (isOk) {
+    correct++;
+    xpEarned += 75;
+    showXPToast(75);
+  }
+
+  // Build answer image HTML
+  let answerImgHtml = '';
+  if (q.answerImg) {
+    answerImgHtml = `
+      <div class="answer-img-wrap">
+        <img src="${escHtml(q.answerImg)}" alt="Resposta correta" loading="lazy">
+        <div class="answer-img-label">${isOk ? '✓ Correto' : '→ Resposta Correta'}</div>
+      </div>`;
+  }
+
+  // Show feedback
+  const fb = document.getElementById('feedback-box');
+  fb.className = `feedback-box show ${isOk ? 'correct' : 'wrong'}`;
+  fb.innerHTML = `
+    <div class="fb-title">${isOk ? '✓ CORRETO' : '✗ NÃO ERA A MELHOR JOGADA'}</div>
+    <div class="fb-text">${escHtml(q.feedback || q.explanation || '')}</div>
+    ${answerImgHtml}`;
+
+  document.getElementById('nxt-btn').classList.add('show');
+};
+
+// ============================================================
+// NEXT
+// ============================================================
+window.nextQ = () => {
+  qIdx++;
+  if (qIdx >= questions.length) {
+    renderResults();
+  } else {
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+};
+
+// ============================================================
+// RESULTS
+// ============================================================
+function renderResults() {
+  const total = questions.length;
+  const pct = Math.round((correct / total) * 100);
+  let label = 'IGL NOVICE', desc = 'Continua a treinar — cada erro é uma lição!';
+  if (pct >= 90) { label = 'DECISÃO PERFEITA'; desc = 'Execução pro level. Raros erram tão pouco.'; }
+  else if (pct >= 70) { label = 'PRO SÓLIDO'; desc = 'Boa leitura do jogo! Revê os que falhaste.'; }
+  else if (pct >= 50) { label = 'EM DESENVOLVIMENTO'; desc = 'Boa base táctica. Pratica os cenários diariamente.'; }
+
+  document.getElementById('main-content').innerHTML = `
+    <div class="results-screen">
+      <div class="res-grade">${pct}%</div>
+      <div class="res-label">${label}</div>
+      <div class="res-desc">${desc}</div>
+      <div class="res-stats">
+        <div>
+          <div class="rstat-n">${correct}</div>
+          <div class="rstat-l">Corretas</div>
+        </div>
+        <div>
+          <div class="rstat-n">${total}</div>
+          <div class="rstat-l">Total</div>
+        </div>
+        <div>
+          <div class="rstat-n" style="color:var(--gold)">${xpEarned}</div>
+          <div class="rstat-l">XP Ganho</div>
+        </div>
+      </div>
+      <div style="margin-bottom:28px;padding:12px 20px;background:rgba(255,70,85,0.06);border:1px solid rgba(255,70,85,0.15);display:inline-block;">
+        <div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gray);margin-bottom:4px;">nota</div>
+        <div style="font-size:12px;color:var(--gray);line-height:1.6;">O XP Pro Trainer é registado no teu perfil principal automaticamente na próxima sessão.</div>
+      </div>
+      <br>
+      <button class="btn-red" onclick="restartQuiz()">Repetir</button>
+      <button class="btn-ghost" onclick="window.close()">Fechar</button>
+    </div>`;
+}
+
+window.restartQuiz = () => {
+  qIdx = 0; correct = 0; xpEarned = 0;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  renderQuestion();
+};
+
+// ============================================================
+// XP TOAST
+// ============================================================
+function showXPToast(amount) {
+  const t = document.getElementById('xp-toast');
+  t.textContent = `+${amount} XP`;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// ============================================================
+// UTILS
+// ============================================================
+function escHtml(s) {
+  return String(s || '')
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
